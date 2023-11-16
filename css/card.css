@@ -1,0 +1,106 @@
+/* General card */
+.card{
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    align-items: center;
+    color:var(--cardTitleColor);
+    background-color: var(--cardBGColor);
+}
+
+.card:hover{cursor: pointer;}
+
+.big-card a,.blog-card a, .card a{
+    color: var(--cardTitleColor);
+    text-decoration:none;
+}
+.big-card{
+    max-height: 300px;
+    display: grid; 
+    gap:1rem;
+    grid-template-areas:
+    'grid1 grid2 grid3'
+    'grid4 grid4 grid4'
+    'grid5 grid5 grid5';
+}
+/* General card */
+.product-card{
+    width: 200px;
+    height: 100px; 
+}
+.product-card div{
+    width: 50%;
+    height: 100%;
+}
+
+.big-card{
+    width: 500px;
+    height: 500px;
+}
+/* Blog cards */
+.blog-card{
+    width: 150px;
+    height: var(--blogCardHeight);
+}
+.wide-blog-card{
+    width:100%;
+    height: 200px;
+}
+.wide-blog-card h6{
+    width: 200px;
+}
+.wide-blog-card .contain-image{
+    height: 150px;
+    margin:10px
+}
+.wide-blog-card .text{
+    overflow: hidden;
+    height: 100px;
+    margin: 20px 0;
+}
+.blog-card .contain-image{
+    height: 70%;
+    width: 100%;
+    
+}
+
+.card h6{
+    padding:5px;
+    margin-top:0;
+    margin-bottom:5px;
+}
+
+.big-card .contain-image{
+    height: 100%;
+}
+.big-card .scroll-box{
+    width: 100%;
+    height: 100%;
+    border:0px;
+    padding:0px;
+    background:none;
+}
+div.scroll {
+    margin:4px, 4px;
+    padding:10px;
+    background-color: none;
+    width: 480px;
+    height: 110px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+    scrollbar-color: white grey;
+    scrollbar-width: thin;
+}
+
+
+
+.loading-card{
+    animation: loadingAnimation 1s infinite ;
+    opacity: 0.5;
+}
+@keyframes loadingAnimation {
+    0%{opacity: 0.5;}
+    50%{opacity: 0.9;}
+    100%{opacity: 0.5;}
+}

@@ -1,1 +1,0 @@
-# MeepleGalaxy2.0

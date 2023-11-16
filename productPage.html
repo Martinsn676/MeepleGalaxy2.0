@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Page</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/card.css" rel="stylesheet">
+    <link href="css/lazy.css" rel="stylesheet">
+    <script src="js/global.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/addElements.js"></script>
+    <script  src="js/infoPageRender.js"></script>
+    <script defer src="js/header&footer.js"></script>
+    
+
+</head>
+<body>
+<header>
+</header>
+<main>
+    <section id="productArea"></section>
+    <section id="products-container"></section>
+    <section id="modal-container"></section>
+    
+</main>
+<footer>
+</footer>
+<script>
+    infoPageRender("#productArea","product")
+    addElements("#products-container","products",20,"slider");
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/card.css" rel="stylesheet">
+    <link href="css/lazy.css" rel="stylesheet">
+    <script src="js/global.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/addElements.js"></script>
+    <script defer src="js/header&footer.js"></script>
+
+</head>
+<body>
+<header>
+</header>
+<main>
+    <h1>See the items available in our shop</h1>
+    <section class="quickView-container flex-row flex-wrap"></section> 
+    <section id="products-container" class="flex-row flex-wrap"></section> 
+    <section id="modal-container"></section>
+</section>
+</main>
+<footer>
+</footer>
+<script>
+    addElements("#products-container","products",15);
+</script>
+</body>
+</html>

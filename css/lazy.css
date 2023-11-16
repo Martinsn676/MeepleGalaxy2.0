@@ -1,0 +1,42 @@
+/*========= Alignment statuses =========*/
+
+.flex-column, .group-flex-column > div{
+    display: flex;
+    flex-direction: column;}
+.flex-row,.group-flexrow > div{
+    display: flex;
+    flex-direction: row;}
+.flex-wrap{
+    flex-wrap: wrap;}
+.no-wrap {
+    flex-wrap: nowrap ;}
+.noMargin-group >*{
+    margin: 0px;}
+.align-column{
+    align-items: center;
+    justify-content: center;}
+.align-row{
+    align-items: center;}
+.align-top{
+    align-items:flex-start;}
+.align-bottom{
+    align-items: flex-end;}
+.text-right{
+    text-align: right;}
+.text-center{
+    text-align: center;}
+.lazy-margin *{
+    margin:10px;}
+/*========= Simple Grid =========*/
+
+.grid1{grid-area: grid1;}
+.grid2{grid-area: grid2;}
+.grid3{grid-area: grid3;}
+.grid4{grid-area: grid4;}
+.grid5{grid-area: grid5;}
+.grid6{grid-area: grid6;}
+.grid7{grid-area: grid7;}
+.grid8{grid-area: grid8;}
+.grid9{grid-area: grid9;}
+
+

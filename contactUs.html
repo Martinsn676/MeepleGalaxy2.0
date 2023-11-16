@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact us</title>
+    <link href="css/lazy.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/global.js"></script>
+    <script src="js/templates.js"></script>
+    <script defer src="js/contactUs.js"></script>
+    <script defer src="js/header&footer.js"></script>
+</head>
+<body>
+<header>
+</header>
+<main id="contactPage">
+    <h1>Contact us</h1>
+    <section class="gridArea group-flex-column">
+        
+        <div id="nameContainer" class="grid1">
+            <div class="label-text">
+                <label for="nameField">Name:</label>
+                <span class="message"></span>
+            </div>
+            <input type="text" id="input" name="message">
+        </div>
+
+        <div id="emailFieldContainer" class="grid2">
+            <div class="label-text">
+                <label for="emailField">E-mail:</label>
+                <span class="message"></span>
+            </div>
+            <input type="text" id="input" name="message">
+            
+        </div>
+
+        <div id="subjectContainer" class="grid3">
+            <div class="label-text">    
+                <label for="subjectField">Subject:</label>
+                <span class="message"></span>
+            </div>
+            <input type="text" id="input" name="message">
+            
+        </div>
+
+        <div id="messageContainer" class="grid4">
+            <div class="label-text">
+                <label for="message">What can we help you with?</label>
+                <span class="message"></span>
+            </div>
+            <textarea type="text" id="input" name="message"></textarea>
+        </div>
+        
+    </section>
+
+    <button id="submitButton">Send</button>
+</main>
+<footer>
+</footer>
+</body>
+</html>
