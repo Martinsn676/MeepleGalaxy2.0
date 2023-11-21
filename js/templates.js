@@ -57,10 +57,10 @@ function blogMainClasses(){return`
   card blog-card flex-column`;}
 function blogTemplate(element){return `
     <div>
-      <h6>${element.title.rendered}</h6>
       <h6>${cleanTime(element.date)}</h6>
+      <h6>${element.title.rendered}</h6>
     </div>
-    <div class="contain-image" style="background-image: url('${element.jetpack_featured_media_url}')">
+      <div class="contain-image" style="background-image: url('${element.jetpack_featured_media_url}')">
     </div>
   `;}
 
@@ -73,7 +73,7 @@ function wideBlogTemplate(element){return`
       <div class="contain-image image" style="background-image: url('${element.jetpack_featured_media_url}')"></div>
       <div>
         <div class="text">${cleanData(element.content.rendered)}</div>
-        <div >read more</div> 
+        <div >Read more</div> 
       </div>   
     </div>
   `;}
@@ -81,7 +81,10 @@ function wideBlogTemplate(element){return`
 function blogPageTemplate(element){return `
     <div class="flex-row">
       <div class="contain-image blog-image image" style="background-image: url('${element.jetpack_featured_media_url}')"></div>  
-      <h1>${element.title.rendered}</h1>
+      <div cless="flex-colum">
+        <h2>${cleanTime(element.date)}</h2>
+        <h1>${element.title.rendered}</h1>
+      </div>
     </div>
     <p>
       ${element.content.rendered}

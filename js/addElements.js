@@ -58,6 +58,7 @@ async function addElements(place,itemType,quantity,type,order) {
     let maxElements = 999
     mainContainer.innerHTML=""
     loadNumber = quantity;
+    //missing info and errorhandling
     if(!type){
         type=["",999,999]
     }
@@ -76,10 +77,10 @@ async function addElements(place,itemType,quantity,type,order) {
     }
     mainContainer.innerHTML += `
     <div class="sort-buttons flex-row no-wrap">
-        <button id='titleAsc' onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],'titleAsc')">Title asc</button>
-        <button id='titleDesc' onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],'titleDesc')">Title desc</button>
-        <button id='dateAsc' onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],'dateAsc')">Date acc</button>
-        <button id='dateDesc' onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],'dateDesc')">Date desc</button>
+        <button id='titleAsc' class="asc-sort" onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],['titleAsc'])">Title asc</button>
+        <button id='titleDesc' class="desc-sort"  onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],['titleDesc'])">Title desc</button>
+        <button id='dateAsc' class="asc-sort" onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],['dateAsc'])">Date asc</button>
+        <button id='dateDesc' class="desc-sort" onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],['dateDesc'])">Date desc</button>
     </div>
     `;
     mainContainer.innerHTML+="<section id='elements-container' class='flex-row flex-wrap'></section>"
@@ -90,26 +91,25 @@ async function addElements(place,itemType,quantity,type,order) {
     if(!order){
         orderName = standardSort
     }else{
-        orderName = order
+        orderName = order[0]
+        if(order[1]==="hide"){
+            mainContainer.querySelector(".sort-buttons").classList.add("hide")
+        }
     }
-    if(orderName==="hide"){
-        mainContainer.querySelector(".sort-buttons").classList.add("hide")
-        urlOrder=titleAsc
-    }else{
-        if(orderName === "titleAsc"){
-            order = titleAsc
-            urlOrder = titleAsc
-        }else if(orderName ==="titleDesc"){
-            urlOrder = titleDesc
-        }
-        else if(orderName ==="dateAsc"){
-            urlOrder = dateAsc
-        }
-        else if(orderName ==="titleDesc"){
-            urlOrder = dateDesc
-        }
-        mainContainer.querySelector(`#${orderName}`).classList.add("selected-sort")
+    
+    if(orderName === "titleAsc"){
+        urlOrder = titleAsc
+    }else if(orderName ==="titleDesc"){
+        urlOrder = titleDesc
     }
+    else if(orderName ==="dateAsc"){
+        urlOrder = dateAsc
+    }
+    else if(orderName ==="dateDesc"){
+        urlOrder = dateDesc
+    }
+    mainContainer.querySelector(`#${orderName}`).classList.add("selected-sort")
+
     
     let container = mainContainer.querySelector("#elements-container")
     if(type[0]==="slider" && window.innerWidth> 900){

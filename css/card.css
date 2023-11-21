@@ -1,9 +1,8 @@
 /* Menu card */
 .sort-buttons button{
     background-color: grey;
-    padding: 7px;
     margin: 5px;
-    border-radius: 10px;
+    padding: 5px;
     color: white;
     cursor: pointer;
 }
@@ -12,6 +11,12 @@
 }
 .sort-buttons.hide{
     display: none;
+}
+.sort-buttons .asc-sort{
+
+}
+.sort-buttons .desc-sort{
+
 }
 /* Slider card */
 .slider{
@@ -68,17 +73,25 @@
     background-color: var(--cardBGColor);
 }
 
+.card h6{
+    padding:5px;
+    margin-top:0;
+    margin-bottom:5px;
+}
+
 .card:hover{cursor: pointer;}
 
 .big-card a,.blog-card a, .card a{
     color: var(--cardTitleColor);
     text-decoration:none;
 }
+/* Product card */
+
 .product-card{
     width: 200px;
     height: 100px; 
 }
-.product-card div{
+.product-card > div{
     width: 50%;
     height: 100%;
 }
@@ -87,38 +100,6 @@
     width: 500px;
     height: 500px;
 }
-/* Blog cards */
-.blog-card{
-    width: 150px;
-    height: var(--blogCardHeight);
-}
-.wide-blog-card{
-    width:100%;
-    height: 200px;
-}
-
-.wide-blog-card .contain-image{
-    height: 150px;
-    min-width: 150px;
-    margin:10px
-}
-.wide-blog-card .text{
-    overflow: hidden;
-    height: 6rem;
-    margin: 20px 0;
-}
-.blog-card .contain-image{
-    height: 70%;
-    width: 100%;
-    
-}
-
-.card h6{
-    padding:5px;
-    margin-top:0;
-    margin-bottom:5px;
-}
-
 .big-card .contain-image{
     height: 100%;
 }
@@ -138,6 +119,37 @@
     'grid4 grid4 grid4'
     'grid5 grid5 grid5';
 }
+/* Blog cards */
+.blog-card{
+    width: 150px;
+    height: var(--blogCardHeight);
+}
+.blog-card > div{
+    height: 50%;
+}
+.wide-blog-card{
+    width:100%;
+    height: 200px;
+}
+
+.wide-blog-card .contain-image{
+    height: 150px;
+    min-width: 150px;
+    margin:10px
+}
+.wide-blog-card .text{
+    overflow: hidden;
+    height: 7rem;
+    margin: 10px 0;
+    font-size: 1rem;
+}
+.blog-card .contain-image{
+    height: 70%;
+    width: 100%;
+    
+}
+
+
 div.scroll {
     margin:4px, 4px;
     padding:10px;
