@@ -1,3 +1,63 @@
+/* Menu card */
+.sort-buttons button{
+    background-color: grey;
+    padding: 7px;
+    margin: 5px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+.sort-buttons .selected-sort{
+    background-color: black;
+}
+.sort-buttons.hide{
+    display: none;
+}
+/* Slider card */
+.slider{
+    width: 100%;
+    height: var(--blogCardHeight)+20px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.slider {
+  position: relative;
+}
+.slider-buttons {
+  position: absolute;
+  cursor: pointer;
+  height: 80%;
+  background-color: var(--cardBGColor);
+  opacity: 0.6;
+  width: 30px;
+  top: 10%
+}
+.slider .card{
+   flex: 1 1 0;
+  width:150px;
+}
+.right-slider {
+  left: var(--bodyMaxWidth);
+  border-radius:0 100px 100px 0;
+}
+.left-slider {
+  border-radius: 100px 0 0 100px;
+  right: var(--bodyMaxWidth);
+}
+.slider .hidden-slider {
+  display: none;
+}
+
+@media only screen and (max-width:899px){
+  .slider-buttons{
+    display: none;
+  }
+  .slider{
+    overflow: hidden;
+  }
+}
+
+
 /* General card */
 .card{
     padding: 5px;
@@ -14,16 +74,6 @@
     color: var(--cardTitleColor);
     text-decoration:none;
 }
-.big-card{
-    max-height: 300px;
-    display: grid; 
-    gap:1rem;
-    grid-template-areas:
-    'grid1 grid2 grid3'
-    'grid4 grid4 grid4'
-    'grid5 grid5 grid5';
-}
-/* General card */
 .product-card{
     width: 200px;
     height: 100px; 
@@ -46,16 +96,15 @@
     width:100%;
     height: 200px;
 }
-.wide-blog-card h6{
-    width: 200px;
-}
+
 .wide-blog-card .contain-image{
     height: 150px;
+    min-width: 150px;
     margin:10px
 }
 .wide-blog-card .text{
     overflow: hidden;
-    height: 100px;
+    height: 6rem;
     margin: 20px 0;
 }
 .blog-card .contain-image{
@@ -79,6 +128,15 @@
     border:0px;
     padding:0px;
     background:none;
+}
+.big-card{
+    max-height: 300px;
+    display: grid; 
+    gap:1rem;
+    grid-template-areas:
+    'grid1 grid2 grid3'
+    'grid4 grid4 grid4'
+    'grid5 grid5 grid5';
 }
 div.scroll {
     margin:4px, 4px;

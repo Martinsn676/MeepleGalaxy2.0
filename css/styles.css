@@ -20,46 +20,7 @@ header a{
     background-repeat: no-repeat;
     background-position: center;
 }
-.slider{
-    width: 100%;
-    height: var(--blogCardHeight)+20px;
-    display: flex;
-    flex-wrap: nowrap;
-}
-.slider {
-  position: relative;
-}
-.slider-buttons {
-  position: absolute;
-  cursor: pointer;
-  height: 80%;
-  background-color: var(--cardBGColor);
-  opacity: 0.6;
-  width: 30px;
-  top: 10%
-}
-.slider > div{
-   flex: 1 1 0
-}
-.right-slider {
-  left: var(--bodyMaxWidth);
-  border-radius:0 100px 100px 0;
-}
-.left-slider {
-border-radius: 100px 0 0 100px;
-  right: var(--bodyMaxWidth);
-}
-.slider .hidden-slider {
-  display: none;
-}
-.hide-overflow{
-  overflow: hidden;
-}
-@media only screen and (max-width:899px){
-  .slider-buttons{
-    display: none;
-  }
-}
+
 .blog-image{
   height: 200px;
   width: 200px;

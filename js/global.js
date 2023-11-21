@@ -1,18 +1,26 @@
 const sliderItemWidth = window.innerWidth/150;
-const maxSliderElements = 5
+const maxSliderElements  = 5
 const productsUrl = "https://prototype.meeplegalaxy.com/wp-json/wc/store/products";
 const perPage = "per_page="
 
 const blogsUrl = "https://prototype.meeplegalaxy.com/wp-json/wp/v2/posts";
 
-let standardOrder = "orderby=title&order=asc";
+let titleAsc = 'orderby=title&order=asc'
+let titleDesc = 'orderby=title&order=desc';
+let dateAsc = 'orderby=date&order=asc';
+let dateDesc = 'orderby=date&order=desc';
+let standardSort = `titleAsc`;
 
 async function getApi(url,endUrlInfo) {
-  let endUrl = "?"
+  let endUrl = ""
   if(endUrlInfo){
-    endUrlInfo.forEach(element => {
-      endUrl+=element+"&"
-    });
+    for(let i = 0 ; i < endUrlInfo.length; i++){
+      if(i===0){
+        endUrl+="?"+endUrlInfo[i];
+      }else{
+        endUrl+="&"+endUrlInfo[i];
+      }
+    }
   }
   try {
     const result = await fetch(url + endUrl);
@@ -24,35 +32,35 @@ async function getApi(url,endUrlInfo) {
     console.log("getApi error:" + err +" when trying to load: "+url + endUrl);
   }
 }
-function checkSlider(id) {
+function checkSlider(id,maxElements,slideJump) {
   let sliderItems;
-  let sliderContainer = document.querySelector(`#${id}.slider`);
   let showNumber = 0;
-  if(sliderContainer){   
+ 
     function updateSlider(adjust, items) {
       let count = 0;
       let maxShow = window.innerWidth/150;
-      if(showNumber+adjust<items.length-maxShow){
-        showNumber += adjust; 
-      }else{
-        showNumber = 0;
-      }
+
+      showNumber += adjust;      
       if(showNumber<0){
-        showNumber = items.length-maxShow-1;
+        showNumber +=items.length-maxElements;
       }
-      for (let i = 0; i < items.length; i++) {
-        items[i].classList.add("hidden-slider");
-        if(i > showNumber-1 && count<maxShow && count < maxSliderElements){
-            items[i].classList.remove("hidden-slider");
-            count++
-        }
-      }   
-    }
-    sliderItems = document.querySelectorAll(`#${id} .card`);
-    document.querySelector(`#${id} .left-slider`).addEventListener("click", () => updateSlider(-1, sliderItems));
-    document.querySelector(`#${id} .right-slider`).addEventListener("click", () => updateSlider(1, sliderItems));
-    updateSlider(0, sliderItems)
+      if(showNumber>items.length-maxElements){
+        showNumber-=items.length-maxElements
+      }
+      if(maxShow>maxElements){
+        for (let i = 0; i < items.length; i++) {
+          items[i].classList.add("hidden-slider");
+          if(i > showNumber-1 && count<maxShow && count < maxElements){
+              items[i].classList.remove("hidden-slider");
+              count++
+          }
+        }   
+      }
   }
+  sliderItems = document.querySelectorAll(`#${id} .card`);
+  document.querySelector(`#${id} .left-slider`).addEventListener("click", () => updateSlider(-slideJump, sliderItems));
+  document.querySelector(`#${id} .right-slider`).addEventListener("click", () => updateSlider(slideJump, sliderItems));
+  updateSlider(0, sliderItems)
 }
 
 function displayModal(element){
@@ -79,4 +87,8 @@ function cleanData(data){
   div.innerHTML=data;
   const cleanData = div.innerText;
   return cleanData
+}
+function cleanTime(date){
+  const formattedDate = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+  return formattedDate
 }

@@ -1,5 +1,5 @@
-function headerTemplate(){
-  return `
+/* ==== Header ==== */
+function headerTemplate(){return `
   <div class="links-passive flex-row align-row lazy-margin">    
       <a href="index.html">
         <img class="link-logo" src="https://prototype.meeplegalaxy.com/wp-content/uploads/2023/11/logo_wide_b73121fc-20a9-4cbc-b723-f7f21b51c4ee.png">
@@ -9,23 +9,21 @@ function headerTemplate(){
       <a id="blogLink" href="blogs.html">Blogs</a>
       <a id="contactLink" href="contactUs.html">Contact</a>
   </div>
-  `;
-}
+  `;}
 
-function productMainClasses(){
-  return "card product-card flex-row";}
-function productTemplate(element){
-  return `
+/* ==== Products ==== */
+function productMainClasses(){return `
+  card product-card flex-row`;}
+function productTemplate(element){return `
     <div class="contain-image" style="background-image: url('${element.images[0].src}')"></div>
     <div>
     <h6>${element.name}</h6>
     <div>${addAttributes("pc",element)} </div>
     <div>${addAttributes("pt",element)} </div>
     </div>
-  `;
-}
-function quickViewTemplate (element){
-  return `
+  `;}
+
+function quickViewTemplate (element){return `
     <div class="card big-card">
         <div class="contain-image grid1" style="background-image: url('${element.images[0].src}')">
         </div>
@@ -42,51 +40,9 @@ function quickViewTemplate (element){
           ${element.description}  
         </div>
     </div>
-    `;
-}
+    `;}
 
-function blogMainClasses(){
-  return "card blog-card flex-column";}
-function blogTemplate(element){
-  return `
-    <div>
-      <h6>${element.title.rendered}</h6>
-      <h6>dates</h6>
-    </div>
-    <div class="contain-image" style="background-image: url('${element.jetpack_featured_media_url}')">
-    </div>
-  `;
-}
-
-function wideBlogMainClasses(){
-  return"card wide-blog-card flex-row";}
-function wideBlogTemplate(element){
-  return`
-    <div class="flex-column">
-      <h6>${element.title.rendered}</h6>
-      <div class="contain-image image" style="background-image: url('${element.jetpack_featured_media_url}')"></div>
-    </div>
-    <div>
-      <div class="text">${cleanData(element.content.rendered)}</div>
-      <div>see more</div>    
-    </div>
-  `
-}
-
-function blogPageTemplate(element){
-  return `
-    <div class="flex-row">
-      <div class="contain-image blog-image image" style="background-image: url('${element.jetpack_featured_media_url}')"></div>  
-      <h1>${element.title.rendered}</h1>
-    </div>
-    <p>
-      ${cleanData(element.content.rendered)}
-    </p>
-  `;
-}
-
-function productPageTemplate(element){
-    return `
+function productPageTemplate(element){return `
     <div class="flex-row">
       <div class="contain-image blog-image image" style="background-image: url('${element.images[0].src}')"></div>  
       <h1>${element.name}</h1>
@@ -94,20 +50,52 @@ function productPageTemplate(element){
     <p>
       ${cleanData(element.description)}
     </p>
-  `;
+  `;}
 
-}
-function sliderButtonsTemplate(){
-  return`
+/* ==== Blogs ==== */
+function blogMainClasses(){return`
+  card blog-card flex-column`;}
+function blogTemplate(element){return `
+    <div>
+      <h6>${element.title.rendered}</h6>
+      <h6>${cleanTime(element.date)}</h6>
+    </div>
+    <div class="contain-image" style="background-image: url('${element.jetpack_featured_media_url}')">
+    </div>
+  `;}
+
+function wideBlogMainClasses(){return`card wide-blog-card flex-column`;}
+function wideBlogTemplate(element){return`
+    <div class="flex-row">
+      <h6>${element.title.rendered}</h6><h6>(${cleanTime(element.date)})</h6>
+    </div>
+    <div class="flex-row">
+      <div class="contain-image image" style="background-image: url('${element.jetpack_featured_media_url}')"></div>
+      <div>
+        <div class="text">${cleanData(element.content.rendered)}</div>
+        <div >read more</div> 
+      </div>   
+    </div>
+  `;}
+
+function blogPageTemplate(element){return `
+    <div class="flex-row">
+      <div class="contain-image blog-image image" style="background-image: url('${element.jetpack_featured_media_url}')"></div>  
+      <h1>${element.title.rendered}</h1>
+    </div>
+    <p>
+      ${element.content.rendered}
+    </p>
+  `;}
+
+function sliderButtonsTemplate(){return`
     <button class="left-slider slider-buttons"></button>
     <button class="right-slider slider-buttons"></button>
-  `;
-}
-function modalTemplate(){
-  return`
+  `;}
+
+function modalTemplate(){return`
     <div id="modal" class="hide-modal">
     <div id="modal-background"></div>
     <div id="modal-image"></div>
     </div>
-    `
-}
+    `}

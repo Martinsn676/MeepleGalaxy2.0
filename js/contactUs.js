@@ -10,6 +10,17 @@ function checkInput(target,req,neg){
             messageField.innerText = `${neg}`
             return (false);
         }
+    }else if(req==="twoWords"){
+        if(input.includes(" ")){
+            const [firstName, lastName] = input.split(" ");
+s
+            if(firstName.length>1 && lastName.length>1){
+                messageField.innerText = "";
+                return (true);
+            }  
+        }
+        messageField.innerText = `Please write your full name`
+        return (false);
     }else if(input.length>req-1){
         messageField.innerText = "";
         return (true);
@@ -19,24 +30,23 @@ function checkInput(target,req,neg){
     }
 }
 
-
 const emailFieldContainer = document.querySelector("#emailFieldContainer")
 emailFieldContainer.addEventListener("keyup",()=>checkInput(emailFieldContainer,"email","Please write a valid e-mail"))
 
 const nameContainer = document.querySelector("#nameContainer")
-nameContainer.addEventListener("keyup",()=>checkInput(nameContainer,4,"Please write your name"));
+nameContainer.addEventListener("keyup",()=>checkInput(nameContainer,5,"Please write your full name"));
 
 const subjectContainer = document.querySelector("#subjectContainer")
-subjectContainer.addEventListener("keyup",()=>checkInput(subjectContainer,15,"Please write a longer subject"));
+subjectContainer.addEventListener("keyup",()=>checkInput(subjectContainer,15,"Minimum 15 letters"));
 
 const messageContainer = document.querySelector("#messageContainer")
-messageContainer.addEventListener("keyup",()=>checkInput(messageContainer,25,"Please write a longer message"));
+messageContainer.addEventListener("keyup",()=>checkInput(messageContainer,25,"Minimum 25 letters"));
 
 
 const submitButton = document.querySelector("#submitButton")
 submitButton.addEventListener("click",()=>{
     if(checkInput(emailFieldContainer,"email","Please write a valid e-mail") &
-    checkInput(nameContainer,4,"Please write your name") &
+    checkInput(nameContainer,5,"Please write your full name") &
     checkInput(subjectContainer,15,"Please write a longer subject")&
     checkInput(messageContainer,25,"Please write a longer message")){
         console.log("submit")

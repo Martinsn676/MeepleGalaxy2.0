@@ -6,14 +6,14 @@
     <title>Blog Page</title>
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/card.css" rel="stylesheet">
-    <link href="css/lazy.css" rel="stylesheet"> 
+    <link href="css/lazy.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="js/global.js"></script>
     <script src="js/templates.js"></script>
     <script src="js/addElements.js"></script>
-    <script src="js/infoPageRender.js"></script>
     <script defer src="js/header&footer.js"></script>
-    
 
+    <script src="js/infoPageRender.js"></script>
 </head>
 <body>
 <header>
@@ -27,7 +27,7 @@
 </footer>
  <script>
     infoPageRender("#main-content","blog")
-    addElements("#blogs-container","blogs",20,"slider")
+    addElements("#blogs-container","blogs",20,"slider","hide")
 </script>
 </body>
 </html>

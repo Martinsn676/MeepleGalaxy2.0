@@ -47,15 +47,21 @@ function quickView(product) {
 }
 
 async function addElements(place,itemType,quantity,type,order) {
+    console.log(place,itemType,quantity,type,order)
     let slider = false;
     let loadExtra = 0;
     let apiUrl
-    let container = document.querySelector(`${place}`)
-    let secondLoadNumber = 20;
+    let urlOrder
+    let orderName
+    let  mainContainer = document.querySelector(`${place}`)
+    let secondLoadNumber
+    let maxElements = 999
+    mainContainer.innerHTML=""
     loadNumber = quantity;
-    if(!order){
-        order=standardOrder
+    if(!type){
+        type=["",999,999]
     }
+    
     if(itemType==="products"){
         mainTemplate = productMainClasses()
         apiUrl = productsUrl  
@@ -67,51 +73,83 @@ async function addElements(place,itemType,quantity,type,order) {
     if(itemType==="wide-blogs"){
         mainTemplate = wideBlogMainClasses();
         apiUrl = blogsUrl;
-    
     }
-    if(type==="slider"){
-        document.querySelector(`#${container.id}`).classList.add("slider")
-        loadExtra = window.innerWidth/150
-        slider=true;
-        for(let i = 0 ; i < loadExtra && i < maxSliderElements ; i++){
-            container.innerHTML+=`<div class="loading-card ${mainTemplate}"></div>`;
-        }
+    mainContainer.innerHTML += `
+    <div class="sort-buttons flex-row no-wrap">
+        <button id='titleAsc' onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],'titleAsc')">Title asc</button>
+        <button id='titleDesc' onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],'titleDesc')">Title desc</button>
+        <button id='dateAsc' onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],'dateAsc')">Date acc</button>
+        <button id='dateDesc' onclick="addElements('${place}','${itemType}',${quantity},['${type[0]}',${type[1]},${type[2]}],'dateDesc')">Date desc</button>
+    </div>
+    `;
+    mainContainer.innerHTML+="<section id='elements-container' class='flex-row flex-wrap'></section>"
+    if(type[0]==="loadMore"){
+        mainContainer.innerHTML+=`<div id="loadMoreContainer"></div> `; 
+        secondLoadNumber = type[1];
+    }
+    if(!order){
+        orderName = standardSort
     }else{
-        for(let i = 0 ; i < quantity; i++){
-            container.innerHTML+=`<div class="loading-card ${mainTemplate}"></div>`;
+        orderName = order
+    }
+    if(orderName==="hide"){
+        mainContainer.querySelector(".sort-buttons").classList.add("hide")
+        urlOrder=titleAsc
+    }else{
+        if(orderName === "titleAsc"){
+            order = titleAsc
+            urlOrder = titleAsc
+        }else if(orderName ==="titleDesc"){
+            urlOrder = titleDesc
         }
+        else if(orderName ==="dateAsc"){
+            urlOrder = dateAsc
+        }
+        else if(orderName ==="titleDesc"){
+            urlOrder = dateDesc
+        }
+        mainContainer.querySelector(`#${orderName}`).classList.add("selected-sort")
     }
     
-   
-    const elements = await getApi(apiUrl,[perPage+quantity,order]);
+    let container = mainContainer.querySelector("#elements-container")
+    if(type[0]==="slider" && window.innerWidth> 900){
+        container.classList.add("slider")
+        loadExtra = 800/150
+        slider=true;
+        maxElements = type[1]
+    }
+  
+    for(let i = 0 ; i < loadExtra && i < maxElements ; i++){
+            container.innerHTML+=`<div class="loading-card ${mainTemplate}"></div>`;
+    }
+    
+    const loadMoreContainer = mainContainer.querySelector("#loadMoreContainer")
+    const elements = await getApi(apiUrl,[perPage+quantity,urlOrder]);
 
+    
     if(slider){
         container.innerHTML=`${sliderButtonsTemplate()}`;
     }else{
-        console.log("add prev content")
         container.innerHTML=""
     }
-    let startSkip = 0
-    let newSkip = 0
-
+    // let startSkip = 0
+    // let newSkip = 0
     renderElements(elements,0)
-
     async function renderElements(elements,skipNumber){
         let addNumber = skipNumber;
-        const loadMore = document.querySelector("#loadMore")
-        for (let i = skipNumber; i < quantity + loadExtra +skipNumber ; i++) {
-            console.log(i,quantity + loadExtra +skipNumber)
-            if(addNumber===elements.length && type==="slider"){
+        let moreToLoad = true
+        
+        for (let i = skipNumber; i < quantity + skipNumber + loadExtra -1 ; i++) {
+            const card = document.createElement('div');
+            if(addNumber===elements.length && slider){
                 addNumber = 0;
             }
-            const card = document.createElement('div');
             const element = elements[addNumber];
-            if(!elements[addNumber]){
-                loadMore.classList.add("hideThis")
-                console.log("break")
+            if(!element){
+                moreToLoad=false;
                 break;
             }
-        
+            
             if(itemType==="products"){
                 card.className = productMainClasses();
                 card.innerHTML = productTemplate(element)
@@ -133,20 +171,26 @@ async function addElements(place,itemType,quantity,type,order) {
                     location.href=`blogPage.html?id=${element.id}`;
                 });
             }
-        
+
         container.appendChild(card);
         addNumber++
         }
-        checkSlider(container.id)
-        window.addEventListener("resize", () => {checkSlider(container.id)});
-        newSkip = startSkip+addNumber
-        
-        if(loadMore){
-            const loadMoreElements = await getApi(apiUrl,[perPage+secondLoadNumber,order]);
-            loadMore.innerHTML=`<button id="loadmoreButton">Load more</button>`
-            loadmoreButton.addEventListener("click",()=>renderElements(loadMoreElements,newSkip))
+        if(slider){
+            checkSlider(mainContainer.id,maxElements,type[2])
+            //newSkip = startSkip+addNumber
         }
-            
-        
+        if(loadMoreContainer){
+            loadMoreContainer.innerHTML=""
+            if(moreToLoad){
+                loadMoreContainer.innerHTML=`<button id="loadMoreButton">load more</button> `
+                const loadMoreElements = await getApi(apiUrl,[perPage+secondLoadNumber,order]);
+                mainContainer.querySelector("#loadMoreButton").addEventListener("click",()=>renderElements(loadMoreElements,addNumber))
+            }
+        }
     }
+}
+
+function resizeCheck(container){
+
+
 }
