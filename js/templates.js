@@ -1,14 +1,16 @@
 /* ==== Header ==== */
 function headerTemplate(){return `
-  <div class="links-passive flex-row align-row lazy-margin">    
-      <a href="index.html">
-        <img class="link-logo" src="https://prototype.meeplegalaxy.com/wp-content/uploads/2023/11/logo_wide_b73121fc-20a9-4cbc-b723-f7f21b51c4ee.png">
-      </a>
+<div class="links-passive flex-row align-row lazy-margin">    
+    <a href="index.html">
+      <img class="link-logo" src="https://prototype.meeplegalaxy.com/wp-content/uploads/2023/11/logo_wide_b73121fc-20a9-4cbc-b723-f7f21b51c4ee.png">
+    </a>
+    <div class="headerLinks">
       <a id="homeLink" href="index.html">Home</a>
       <a id="shopLink" href="shop.html">Shop</a>
       <a id="blogLink" href="blogs.html">Blogs</a>
       <a id="contactLink" href="contactUs.html">Contact</a>
-  </div>
+    </div>
+</div>
   `;}
 
 /* ==== Products ==== */
@@ -102,3 +104,9 @@ function modalTemplate(){return`
     <div id="modal-image"></div>
     </div>
     `}
+
+function addSortButton(log,order,orderName){
+    return`
+      <button id='${order}' onclick="addElements('${log[0]}','${log[1]}','${log[2]}',${log[3]},['${log[4][0]}',${log[4][1]},${log[4][2]}],['${order}'])">${orderName}</button>
+    `
+}

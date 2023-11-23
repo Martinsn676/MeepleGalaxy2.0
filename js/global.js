@@ -23,6 +23,7 @@ async function getApi(url,endUrlInfo) {
     }
   }
   try {
+    //console.log("api: ",url + endUrl)
     const result = await fetch(url + endUrl);
     const json = await result.json();
     const data = await json;

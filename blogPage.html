@@ -18,16 +18,19 @@
 <body>
 <header>
 </header>
-<main>
+
     <section id="main-content"></section>
+
     <section id="blogs-container"></section>
-    <section id="modal-container"></section>
+<main><section id="modal-container"></section>
+    
 </main>
 <footer>
 </footer>
  <script>
-    infoPageRender("#main-content","blog")
-    addElements("#blogs-container","blogs",20,["slider",5,1],"hide")
+    infoPageRender("main-content","blog")
+    addElements("blogs-container","Latest posts","blogs",20,["slider",5,1],["dateDesc","hide"])
+
 </script>
 </body>
 </html>

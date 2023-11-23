@@ -21,13 +21,12 @@
     <h1>See the items available in our shop</h1>
     <section class="quickView-container flex-row flex-wrap"></section> 
     <section id="products-container" class="flex-row flex-wrap"></section> 
-    <section id="modal-container"></section>
 </section>
 </main>
 <footer>
 </footer>
 <script>
-    addElements("#products-container","products",15);
+    addElements("products-container","All items","products",10,["loadMore",20],["titleAsc","hide"])
 </script>
 </body>
 </html>

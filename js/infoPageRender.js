@@ -1,5 +1,5 @@
 async function infoPageRender(place,type){
-  
+  console.log(place,type)
   const queryString = document.location.search;
   const params = new URLSearchParams(queryString);
   const id = params.get("id");
@@ -7,8 +7,9 @@ async function infoPageRender(place,type){
   let template;
   let speedLoadElement = []
   speedLoadElement = JSON.parse(localStorage.getItem('speedLoad'))
-
+  document.querySelector(`#${place}`).classList.add("full-height")
   if(id===JSON.stringify(speedLoadElement.id)){
+    console.log('speedLoad')
     element = speedLoadElement
     if(type==="blog"){
       template = blogPageTemplate(element)
@@ -33,7 +34,7 @@ async function infoPageRender(place,type){
     }
   }
   function renderPage(place,template){
-    document.querySelector(`${place}`).innerHTML=`${template}`;
+    document.querySelector(`#${place}`).innerHTML=`${template}`;
     addModalClick(document.querySelectorAll(".image"))
   }
 

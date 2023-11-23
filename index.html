@@ -12,25 +12,21 @@
     <script src="js/templates.js"></script>
     <script src="js/addElements.js"></script>
     <script defer src="js/header&footer.js"></script>
-
 </head>
 <body>
 <header>
 </header>
-
 <main>
-    <h2>Latest posts</h2>
     <section id="blogs-container"></section>
-    <section id="blogs-container2"></section>
-    <h2>Games in our store</h2>
+    <section id="nanny"></section>
     <section id="products-container"></section>
 </main>
 <footer>
 </footer>
 <script>
-    addElements("#blogs-container","blogs",20,["slider",5,1],["dateDesc","hide"])
-    //addElements("#blogs-container2","blogs",20)
-    addElements("#products-container","products",20,["slider",3,1])
+    addElements("blogs-container","Latest posts","blogs",20,["slider",5,1],["dateDesc","hide"])
+    addElements("products-container","Games in our store","products",20,["slider",3,1])
+    addElements("nanny","Nanny","products",6,["loadMore",20,10],["titleAsc","hide"])
 </script>
 </body>
 </html>

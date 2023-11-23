@@ -1,6 +1,6 @@
 :root {
     --cardTitleColor: white;
-    --cardBGColor: grey;
+    --cardBGColor: rgb(120,120,120);
     --mainTextColor: black;
     --blogCardHeight:200px;
     --blogCardWidth:150px;
@@ -20,7 +20,9 @@ header a{
     background-repeat: no-repeat;
     background-position: center;
 }
-
+#main-content{
+  min-height: 100vh;
+}
 .blog-image{
   height: 200px;
   width: 200px;
@@ -36,11 +38,11 @@ header a{
   opacity: 0.4;
 }
 #modal .blog-image{
-  height:60%;
-  width: 60%;
+  height: 500px;;
+  width: 500px;
   position: fixed;
-  top: 20%;
-  left:20%;
+  left: calc(50vw - 250px);
+  top:calc(50vw - 250px);
   opacity:1;
 }
 #modal.hide-modal{
@@ -68,7 +70,7 @@ header a.active{
 .message{
   color: orange;
 }
-.message.rough{
+.rough .message{
   color: red;
 }
 .link-logo{

@@ -1,44 +1,60 @@
-/* Menu card */
-.sort-buttons button{
-    background-color: grey;
+/* ===== Menu card ===== */
+button{
+    background-color:var(--cardBGColor);
     margin: 5px;
     padding: 5px;
     color: white;
     cursor: pointer;
 }
 .sort-buttons .selected-sort{
-    background-color: black;
+    background-color: rgb(80,80,80);
 }
 .sort-buttons.hide{
     display: none;
 }
-.sort-buttons .asc-sort{
-
+.sort-buttons{
+    right: 0px;
 }
-.sort-buttons .desc-sort{
-
+#elements-container{
+    width: 100%;
 }
-/* Slider card */
+#topLine h2{
+    margin: 0;
+}
+main section{
+    position: relative;
+    padding: 20px 0;
+}
+.slider-buttons:hover, .card:hover, button:hover{
+    background-color: rgb(100,100,100);
+}
+.slider-buttons:active, button:active{
+    background-color: rgb(70,70,70);
+}
+/* ===== Slider card ===== */
 .slider{
     width: 100%;
     height: var(--blogCardHeight)+20px;
     display: flex;
     flex-wrap: nowrap;
 }
-.slider {
+.slider{
   position: relative;
+}
+.topline-added{
+    padding-top: 30px;
+    position: relative;
 }
 .slider-buttons {
   position: absolute;
   cursor: pointer;
-  height: 80%;
+  height: 60%;
   background-color: var(--cardBGColor);
   opacity: 0.6;
   width: 30px;
-  top: 10%
+  top: 20%
 }
 .slider .card{
-   flex: 1 1 0;
   width:150px;
 }
 .right-slider {
@@ -60,10 +76,18 @@
   .slider{
     overflow: hidden;
   }
+
 }
-
-
-/* General card */
+@media only screen and (min-width:900px){
+    .slider .card{
+        flex: 1 1 0;
+    }
+#topLine>div{
+        position: absolute;
+        top:0px;
+    }
+}
+/* ===== General card ===== */
 .card{
     padding: 5px;
     border-radius: 5px;
@@ -85,7 +109,7 @@
     color: var(--cardTitleColor);
     text-decoration:none;
 }
-/* Product card */
+/* ===== Product card ===== */
 
 .product-card{
     width: 200px;
@@ -119,9 +143,8 @@
     'grid4 grid4 grid4'
     'grid5 grid5 grid5';
 }
-/* Blog cards */
+/* ===== Blog cards ===== */
 .blog-card{
-    width: 150px;
     height: var(--blogCardHeight);
 }
 .blog-card > div{
@@ -148,8 +171,26 @@
     width: 100%;
     
 }
+@media only screen and (min-width:900px){
+    .blog-card{width: calc(20% - 20px);}   
+    .product-card{width: calc(20% - 20px);}   
 
+}
+@media only screen and (max-width:899px){
+.blog-card{width: calc(33% - 20px);}   
+.product-card{width: calc(33% - 20px);}   
+}
+@media only screen and (max-width:599px){
 
+.blog-card{width: calc(50% - 20px);}
+.product-card{width: calc(50% - 20px);}  
+}
+@media only screen and (max-width:315px){
+
+.blog-card{width: calc(100% - 20px);}
+.product-card{width: calc(100% - 20px);}  
+}
+/* ===== Cards functions and extras ===== */
 div.scroll {
     margin:4px, 4px;
     padding:10px;
@@ -162,9 +203,6 @@ div.scroll {
     scrollbar-color: white grey;
     scrollbar-width: thin;
 }
-
-
-
 .loading-card{
     animation: loadingAnimation 1s infinite ;
     opacity: 0.5;

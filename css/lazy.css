@@ -3,9 +3,12 @@
 .flex-column, .group-flex-column > div{
     display: flex;
     flex-direction: column;}
-.flex-row,.group-flexrow > div{
+.flex-row,.group-flex-row > div{
     display: flex;
     flex-direction: row;}
+.flex-row-reverse,.group-flex-row-reverse > div{
+    display: flex;
+    flex-direction: row-reverse;}
 .flex-wrap{
     flex-wrap: wrap;}
 .no-wrap {
