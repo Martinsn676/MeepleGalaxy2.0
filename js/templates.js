@@ -18,10 +18,10 @@ function productMainClasses(){return `
   card product-card flex-row`;}
 function productTemplate(element){return `
     <div class="contain-image" style="background-image: url('${element.images[0].src}')"></div>
-    <div>
-    <h6>${element.name}</h6>
-    <div>${addAttributes("pc",element)} </div>
-    <div>${addAttributes("pt",element)} </div>
+    <div class="flex-column">
+      <h6>${element.name}</h6>
+      <h9>${addAttributes("pc",element)} </h9>
+      <h9>${addAttributes("pt",element)} </h9>
     </div>
   `;}
 
@@ -105,8 +105,16 @@ function modalTemplate(){return`
     </div>
     `}
 
-function addSortButton(log,order,orderName){
-    return`
-      <button id='${order}' onclick="addElements('${log[0]}','${log[1]}','${log[2]}',${log[3]},['${log[4][0]}',${log[4][1]},${log[4][2]}],['${order}'])">${orderName}</button>
-    `
+function addSortButton(log, order, orderName) {
+    return `
+      <button type="button" id='${order}' onclick="sortButtonClick('${log[0]}', '${log[1]}', '${log[2]}', ${log[3]}, ['${log[4][0]}', ${log[4][1]}, ${log[4][2]}], '${order}')">${orderName}</button>
+    `;
+}
+
+function sortButtonClick(param1, param2, param3, param4, param5, order) {
+  //To prevent button jump on page
+
+  const scrollPosition = window.scrollY;
+  addElements(param1, param2, param3, param4, param5, [order]);
+  window.scrollTo(0, scrollPosition);
 }

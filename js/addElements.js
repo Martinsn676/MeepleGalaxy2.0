@@ -75,7 +75,6 @@ async function addElements(place,headline,itemType,quantity,type,order) {
         }); 
     }
     const functionLog = [place,headline,itemType,quantity,type,order]
-    console.log(functionLog)
 
     if(itemType==="products"){
         mainTemplate = productMainClasses()
@@ -92,8 +91,9 @@ async function addElements(place,headline,itemType,quantity,type,order) {
     }
     mainContainer.innerHTML += `
     <div id="topLine">
-        <div> 
+        <div class="flex-cloumn"> 
             <h2>${headline}</h2>
+            <div id="showingInfo"></div>
         </div>
         <div class="sort-buttons flex-row no-wrap">
             ${addSortButton(functionLog,'titleAsc','Title Az')}
@@ -103,9 +103,10 @@ async function addElements(place,headline,itemType,quantity,type,order) {
         </div>
     </div>
     `;
+    
     mainContainer.innerHTML+="<section id='elements-container' class='flex-row flex-wrap'></section>"
     if(type[0]==="loadMore"){
-        mainContainer.innerHTML+=`<div id="loadMoreContainer"></div> `; 
+        mainContainer.innerHTML+=`<div id="loadMoreContainer" class="align-column flex-column"s></div> `; 
         secondLoadNumber = type[1];
     }
     if(order[0]===""){
@@ -153,15 +154,14 @@ async function addElements(place,headline,itemType,quantity,type,order) {
         container.innerHTML=`${sliderButtonsTemplate()}`;
         }else{
             container.innerHTML=""
-        }
-    
-    // let startSkip = 0
-    // let newSkip = 0
+        }  
+    let loadMoreElements
     renderElements(elements,0)
+  
+
     async function renderElements(elements,skipNumber){
         let addNumber = skipNumber;
-        let moreToLoad = true
-        
+      
         for (let i = skipNumber; i < quantity + skipNumber + loadExtra  ; i++) {
             const card = document.createElement('div');
             if(addNumber===elements.length && slider){
@@ -169,7 +169,6 @@ async function addElements(place,headline,itemType,quantity,type,order) {
             }
             const element = elements[addNumber];
             if(!element){
-                moreToLoad=false;
                 break;
             }
             if(itemType==="products"){
@@ -195,21 +194,20 @@ async function addElements(place,headline,itemType,quantity,type,order) {
             }
             container.appendChild(card);
             addNumber++
-            if(addNumber>=secondLoadNumber){
-                moreToLoad=false;
-            }
-            console.log(addNumber)
         }
+        
         if(slider){
             checkSlider(mainContainer.id,maxElements,type[2])
-            //newSkip = startSkip+addNumber
         }
-        if(loadMoreContainer){
-                       
+        if(loadMoreContainer){    
             loadMoreContainer.innerHTML=""
-            if(moreToLoad){
-                loadMoreContainer.innerHTML=`<button id="loadMoreButton">load more</button> `
-                const loadMoreElements = await getApi(apiUrl,[perPage+secondLoadNumber,urlOrder]);
+            if(!loadMoreElements){
+                loadMoreElements = await getApi(apiUrl,[perPage+secondLoadNumber,urlOrder]);
+            }
+            mainContainer.querySelector("#showingInfo").innerHTML=`Showing ${addNumber} of ${loadMoreElements.length}`       
+
+            if(loadMoreElements.length>addNumber){
+                loadMoreContainer.innerHTML=`<button id="loadMoreButton" >load more</button> `
                 mainContainer.querySelector("#loadMoreButton").addEventListener("click",()=>renderElements(loadMoreElements,addNumber))
             }
         }
@@ -219,7 +217,5 @@ async function addElements(place,headline,itemType,quantity,type,order) {
 function resizeCheck(changeFrom,width){
     if(changeFrom==="mobile" && width>900){
         console.log("change to pc")
-        
     }
-
 }

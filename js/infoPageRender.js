@@ -11,33 +11,28 @@ async function infoPageRender(place,type){
   if(id===JSON.stringify(speedLoadElement.id)){
     console.log('speedLoad')
     element = speedLoadElement
-    if(type==="blog"){
-      template = blogPageTemplate(element)
-      renderPage(place,template)
-    }else if(type==="product"){
-      template = productPageTemplate(element);
-      renderPage(place,template)
-    }else{
-      document.querySelector(`#${place}`).innerHTML=`type of "${type} is unknown`
-    }
   }else{
     if(type==="blog"){
       element = await getApi(blogsUrl+"/"+id);
-      template = blogPageTemplate(element)
-      renderPage(place,template)
     }else if(type==="product"){
       element = await getApi(productsUrl+"/"+id);
-      template = productPageTemplate(element);
-      renderPage(place,template)
-    }else{
-      document.querySelector(`#${place}`).innerHTML=`type of "${type} is unknown`
     }
   }
-  function renderPage(place,template){
-    document.querySelector(`#${place}`).innerHTML=`${template}`;
-    addModalClick(document.querySelectorAll(".image"))
-  }
+  console.log(element)
+  if(element){
+    if(type==="blog"){
+      template = blogPageTemplate(element)
+    }else if(type==="product"){
+      template = productPageTemplate(element);
+    }
+    
+    renderPage(place,template)
 
+    function renderPage(place,template){
+      document.querySelector(`#${place}`).innerHTML=`${template}`;
+      addModalClick(document.querySelectorAll(".image"))
+    }
+  }
 }
 
 

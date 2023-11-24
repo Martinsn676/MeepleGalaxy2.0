@@ -48,16 +48,32 @@ const submitButton = document.querySelector("#submitButton")
 
 const inputFields = ["emailFieldContainer","nameContainer","subjectContainer","messageContainer"]
 submitButton.addEventListener("click",()=>checkAllInputs());
-
-function checkForUnsent(input){
-    input.forEach(element => {
-        oldInput = JSON.parse(localStorage.getItem(`${element}`))
-        field=document.querySelector(`#${element} #input`)
-        field.value=oldInput
+let saveLoaded = false;
+function checkForUnsent(){
+    inputFields.forEach(element => {
+        oldInput = JSON.parse(localStorage.getItem(`${element}`));
+        if(oldInput && oldInput.length>0){
+            field=document.querySelector(`#${element} #input`);
+            field.value=oldInput;
+            saveLoaded=true
+        }
     });
+    if(saveLoaded){
+        document.querySelector("#saveMessage").innerHTML= `
+        <div>Welcome back, we saved your form</div>
+        <button onclick='resetForm()'>Reset it</button>`
+    }
 }
+function resetForm(){
+    inputFields.forEach(element => {
+        field=document.querySelector(`#${element} #input`);
+        field.value=""
+        localStorage.removeItem(`${element}`);
+    });
+    document.querySelector("#saveMessage").innerHTML=""
 
-checkForUnsent(inputFields)
+}
+checkForUnsent()
 function checkAllInputs(){
     emailInput = checkInput(emailFieldContainer,"email","Please write a valid e-mail") 
     nameInput = checkInput(nameContainer,5,"Please write your full name") 

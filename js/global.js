@@ -25,9 +25,14 @@ async function getApi(url,endUrlInfo) {
   try {
     //console.log("api: ",url + endUrl)
     const result = await fetch(url + endUrl);
-    const json = await result.json();
-    const data = await json;
-    return data;
+    if (!result.ok) {
+      throw new Error(`HTTP error! Status: ${result.status}`);
+    }else{
+      const json = await result.json();
+      const data = await json;
+      console.log(data)
+      return data;
+    }
   } catch (err) {
     document.querySelector("main").innerHTML = "We are sorry, we couldn't connect with the server";
     console.log("getApi error:" + err +" when trying to load: "+url + endUrl);

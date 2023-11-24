@@ -48,7 +48,7 @@ main section{
 .slider-buttons {
   position: absolute;
   cursor: pointer;
-  height: 60%;
+  height: 55%;
   background-color: var(--cardBGColor);
   opacity: 0.6;
   width: 30px;
