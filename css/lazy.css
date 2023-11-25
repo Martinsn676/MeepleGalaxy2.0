@@ -1,5 +1,7 @@
 /*========= Alignment statuses =========*/
-
+.full-width{
+    width: 100%;
+}
 .flex-column, .group-flex-column > div{
     display: flex;
     flex-direction: column;}

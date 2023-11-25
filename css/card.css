@@ -103,11 +103,17 @@ main section{
     margin-bottom:5px;
 }
 
-.card:hover{cursor: pointer;}
+.card{cursor: pointer;}
 
 .big-card a,.blog-card a, .card a{
     color: var(--cardTitleColor);
     text-decoration:none;
+}
+.showOnHower{
+    display: none;
+}
+.card:hover .showOnHower{
+    display: block;
 }
 /* ===== Product card ===== */
 
@@ -119,7 +125,12 @@ main section{
     width: 50%;
     height: 100%;
 }
-
+.product-card .info-text{
+    margin-left: 10px;
+}
+.product-card .info-text span{
+    font-size: 0.7rem;
+}
 .big-card{
     width: 500px;
     height: 500px;

@@ -5,6 +5,7 @@
     --blogCardHeight:200px;
     --blogCardWidth:150px;
     --bodyMaxWidth:800px;
+    --modalImageSize:500px;
 }
 body{
     max-width: var(--bodyMaxWidth);
@@ -20,9 +21,7 @@ header a{
     background-repeat: no-repeat;
     background-position: center;
 }
-#main-content{
-  min-height: 100vh;
-}
+
 .blog-image{
   height: 200px;
   width: 200px;
@@ -38,11 +37,11 @@ header a{
   opacity: 0.4;
 }
 #modal .blog-image{
-  height: 500px;;
-  width: 500px;
+  height: var(--modalImageSize);
+  width: var(--modalImageSize);
   position: fixed;
-  left: calc(50vw - 250px);
-  top:calc(50vw - 250px);
+  left: calc(50vw - var(--modalImageSize)/2);
+  top:calc(50vh - var(--modalImageSize)/2);
   opacity:1;
 }
 #modal.hide-modal{
@@ -77,5 +76,5 @@ header a.active{
   height: 50px;
 }
 .full-height{
-  height: 500px;
+  min-height: 200px;
 }

@@ -30,7 +30,6 @@ async function getApi(url,endUrlInfo) {
     }else{
       const json = await result.json();
       const data = await json;
-      console.log(data)
       return data;
     }
   } catch (err) {

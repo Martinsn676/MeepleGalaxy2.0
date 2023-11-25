@@ -95,7 +95,7 @@ async function addElements(place,headline,itemType,quantity,type,order) {
             <h2>${headline}</h2>
             <div id="showingInfo"></div>
         </div>
-        <div class="sort-buttons flex-row no-wrap">
+        <div id="sortButtonsID" class="sort-buttons flex-row no-wrap">
             ${addSortButton(functionLog,'titleAsc','Title Az')}
             ${addSortButton(functionLog,'titleDesc','Title Za')}
             ${addSortButton(functionLog,'dateAsc','Latest')}
@@ -106,7 +106,7 @@ async function addElements(place,headline,itemType,quantity,type,order) {
     
     mainContainer.innerHTML+="<section id='elements-container' class='flex-row flex-wrap'></section>"
     if(type[0]==="loadMore"){
-        mainContainer.innerHTML+=`<div id="loadMoreContainer" class="align-column flex-column"s></div> `; 
+        mainContainer.innerHTML+=`<div id="loadMoreContainer" class="full-width align-column flex-column"></div> `; 
         secondLoadNumber = type[1];
     }
     if(order[0]===""){
@@ -164,6 +164,14 @@ async function addElements(place,headline,itemType,quantity,type,order) {
       
         for (let i = skipNumber; i < quantity + skipNumber + loadExtra  ; i++) {
             const card = document.createElement('div');
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', function (event) {
+  // Check if the pressed key is "Enter" (key code 13)
+  if (event.keyCode === 13) {
+    // Perform the action, e.g., navigate to a product page
+    window.location.href = 'path/to/product/page';
+  }
+            });
             if(addNumber===elements.length && slider){
                 addNumber = 0;
             }
@@ -174,28 +182,29 @@ async function addElements(place,headline,itemType,quantity,type,order) {
             if(itemType==="products"){
                 card.className = productMainClasses();
                 card.innerHTML = productTemplate(element)
-                card.addEventListener("click", () => quickView(element));
+                //card.addEventListener("click", () => quickView(element));
             }
             if(itemType==="blogs"){
                 card.className = blogMainClasses();
+                card.classList.add("tabindex='0'")
                 card.innerHTML = blogTemplate(element)
-                card.addEventListener("click", () => {
-                    localStorage.setItem('speedLoad', JSON.stringify(element));
-                    location.href=`blogPage.html?id=${element.id}`;
-                });
+                
             }
             if(itemType==="wide-blogs"){
                 card.className = wideBlogMainClasses();
                 card.innerHTML = wideBlogTemplate(element);
-                card.addEventListener("click", () => {
-                    localStorage.setItem('speedLoad', JSON.stringify(element));
-                    location.href=`blogPage.html?id=${element.id}`;
-                });
+                
             }
+            
             container.appendChild(card);
             addNumber++
+            card.addEventListener('click',()=>goToPage(itemType,element))
+            card.addEventListener('keydown', function (event) {
+                if (event.keyCode === 13) {
+                    goToPage(itemType,element)
+                }
+            });
         }
-        
         if(slider){
             checkSlider(mainContainer.id,maxElements,type[2])
         }
@@ -211,9 +220,21 @@ async function addElements(place,headline,itemType,quantity,type,order) {
                 mainContainer.querySelector("#loadMoreButton").addEventListener("click",()=>renderElements(loadMoreElements,addNumber))
             }
         }
+        //To keep sort buttons disabled to after load
+        allButons = mainContainer.querySelectorAll("button");
+        allButons.forEach(element => {
+            element.disabled=false;
+        });
     }
 }
-
+function goToPage(itemType,element){
+    localStorage.setItem('speedLoad', JSON.stringify(element));
+    if(itemType==="blogs"){  
+        location.href=`blogPage.html?id=${element.id}`;
+    }else if(itemType==="products"){
+        location.href=`productPage.html?id=${element.id}`;
+    }
+}
 function resizeCheck(changeFrom,width){
     if(changeFrom==="mobile" && width>900){
         console.log("change to pc")
