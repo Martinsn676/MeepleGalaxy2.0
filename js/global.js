@@ -10,7 +10,9 @@ let titleDesc = 'orderby=title&order=desc';
 let dateAsc = 'orderby=date&order=asc';
 let dateDesc = 'orderby=date&order=desc';
 let standardSort = `titleAsc`;
-async function getApi(url, endUrlInfo) {
+
+
+async function getApi(url, endUrlInfo, maxRetries = 1) {
   let endUrl = "";
   if (endUrlInfo) {
     for (let i = 0; i < endUrlInfo.length; i++) {
@@ -31,29 +33,43 @@ async function getApi(url, endUrlInfo) {
     controller.abort();
   });
 
-  try {
-    // Make the fetch request with the signal option.
-    const result = await fetch(url + endUrl, { signal });
+  let retryCount = 0;
 
-    if (!result.ok) {
-      throw new Error(`HTTP error! Status: ${result.status}`);
-    } else {
-      const json = await result.json();
-      const data = await json;
-      return data;
+  while (retryCount <= maxRetries) {
+    try {
+      // Make the fetch request with the signal option.
+      const result = await fetch(url + endUrl, { signal });
+
+      if (!result.ok) {
+        throw new Error(`HTTP error! Status: ${result.status}`);
+      } else {
+        const json = await result.json();
+        const data = await json;
+        return data;
+      }
+    } catch (err) {
+      // Log the full error for further investigation.
+      console.error('getApi error:', err, 'when trying to load:', url + endUrl);
+
+      // Retry only for ERR_EMPTY_RESPONSE and within the specified retry count
+      if (err.message.includes('ERR_EMPTY_RESPONSE') && retryCount < maxRetries) {
+        console.log('Retrying...');
+
+        // Increment the retry count
+        retryCount++;
+      } else {
+        // If it's not ERR_EMPTY_RESPONSE or reached max retries, throw the error
+        throw err;
+      }
     }
-  } catch (err) {
+  } 
 
-    // Log the full error for further investigation.
-    console.error('getApi error:', err, 'when trying to load:', url + endUrl);
-    
-  } finally {
-    // Remove the event listener when the fetch is complete or has failed.
-    window.removeEventListener('beforeunload', () => {
-      controller.abort();
-    });
-  }
+  // Remove the event listener when the fetch is complete or has failed.
+  window.removeEventListener('beforeunload', () => {
+    controller.abort();
+  });
 }
+
 
 function checkSlider(id,maxElements,slideJump) {
   if(!slideJump){slideJump=1;}
