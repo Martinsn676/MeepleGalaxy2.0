@@ -116,9 +116,6 @@ header a.active{
     flex-direction: column;
   }
 }
-#hide-button{
-
-}
 #show-button{
   display: none;
 }

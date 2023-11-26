@@ -75,27 +75,26 @@ function checkSlider(id,maxElements,slideJump) {
   if(!slideJump){slideJump=1;}
   let sliderItems;
   let showNumber = 0;
-  console.log(slideJump)
-    function updateSlider(adjust, items) {
-      let count = 0;
-      let maxShow = window.innerWidth/150;
+  function updateSlider(adjust, items) {
+    let count = 0;
+    let maxShow = window.innerWidth/150;
 
-      showNumber += adjust;      
-      if(showNumber<0){
-        showNumber +=items.length-maxElements-1;
-      }
-      if(showNumber>items.length-maxElements){
-        showNumber-=items.length-maxElements
-      }
-      if(maxShow>maxElements){
-        for (let i = 0; i < items.length; i++) {
-          items[i].classList.add("hidden-slider");
-          if(i > showNumber-1 && count<maxShow && count < maxElements){
-              items[i].classList.remove("hidden-slider");
-              count++
-          }
-        }   
-      }
+    showNumber += adjust;      
+    if(showNumber<0){
+      showNumber +=items.length-maxElements-1;
+    }
+    if(showNumber>items.length-maxElements){
+      showNumber-=items.length-maxElements
+    }
+    if(maxShow>maxElements){
+      for (let i = 0; i < items.length; i++) {
+        items[i].classList.add("hidden-slider");
+        if(i > showNumber-1 && count<maxShow && count < maxElements){
+            items[i].classList.remove("hidden-slider");
+            count++
+        }
+      }   
+    }
   }
   sliderItems = document.querySelectorAll(`#${id} .card`);
   document.querySelector(`#${id} .left-slider`).addEventListener("click", () => updateSlider(-slideJump, sliderItems));

@@ -142,7 +142,7 @@ button:disabled {
     font-size: 0.7rem;
 }
 .big-card{
-    width: 500px;
+    
     height: 500px;
 }
 .big-card .contain-image{
@@ -198,14 +198,16 @@ button:disabled {
     width: calc(100% - 20px);
     height: 200px;
 }
-
+.card.big-card{
+    width: 100%;
+}
 /* ===== Cards functions and extras ===== */
 div.scroll {
     margin:4px, 4px;
     padding:10px;
     background-color: none;
-    width: 480px;
-    height: 110px;
+    width: calc(100% - 30px);
+    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     text-align:justify;
