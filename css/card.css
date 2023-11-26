@@ -23,7 +23,7 @@ button{
 }
 main section{
     position: relative;
-    padding: 20px 0;
+   
 }
 
 .fully-loaded .slider-buttons:hover, .fully-loaded .card:hover, button:hover{
@@ -43,7 +43,7 @@ button:disabled {
 }
 #bottomLine{
     position: absolute;
-    bottom: 0px;
+    
     width: 100%;
     z-index: 2;
 }
@@ -65,7 +65,7 @@ button:disabled {
   position: relative;
 }
 .display-section{
-    padding-top: 30px;
+    padding:40px 0;
     position: relative;
 }
 .slider-buttons {
