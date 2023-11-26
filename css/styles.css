@@ -21,9 +21,9 @@ header a{
     background-repeat: no-repeat;
     background-position: center;
 }
-button:disabled {
-  cursor: default;
-  background-color: red;
+#loadMoreButton{
+  padding: 10px;
+  margin: 0;
 }
 .blog-image{
   height: 200px;

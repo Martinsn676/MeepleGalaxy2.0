@@ -21,7 +21,7 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     const  mainContainer = document.querySelector(`#${place}`)
     mainContainer.innerHTML = `${cardSection(functionLog,headline)}`;
     const container = mainContainer.querySelector("#elements-container")
-    mainContainer.classList.add("display-section")
+    
     // alpha, mobile version instead
     if(window.innerWidth<900){
         type = ["loadMore",12]
@@ -30,10 +30,12 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
         window.addEventListener("resize", ()=> {
             resizeCheck("mobile",window.innerWidth)
         }); 
+        mainContainer.classList.add("display-section","mobile")
     }else{
         window.addEventListener("resize", ()=> {
             resizeCheck("pc",window.innerWidth)
         }); 
+        mainContainer.classList.add("display-section","pc")
     }
     // handling template absed on product type
     if(itemType==="products"){
