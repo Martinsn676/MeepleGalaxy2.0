@@ -97,10 +97,10 @@ function wideBlogTemplate(element){return`
     <div class="flex-row">
       <h6>${element.title.rendered}</h6><h6>(${cleanTime(element.date)})</h6>
     </div>
-    <div class="flex-row">
+    <div class="grid-row-50">
       <div class="contain-image image" style="background-image: url('${element.jetpack_featured_media_url}')"></div>
-      <div>
-        <div class="text">${cleanData(element.content.rendered)}</div>
+      <div class="">
+        <p class="text">${cleanData(element.content.rendered)}</p>
         <div >Read more</div> 
       </div>   
     </div>

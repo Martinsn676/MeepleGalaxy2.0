@@ -21,6 +21,9 @@ header a{
     background-repeat: no-repeat;
     background-position: center;
 }
+#main-content{
+  margin: 10px;
+}
 #loadMoreButton{
   padding: 10px;
   margin: 0;
@@ -54,6 +57,7 @@ header a.active{
   text-decoration:underline;
 }
 #contactPage{
+  padding: 20px;
   margin: 0 auto;
   max-width: 600px;
 }
@@ -70,10 +74,11 @@ header a.active{
   margin: 5px 0;
 }
 .message{
+  font-size: 0.7rem;
   color: orange;
 }
 .rough .message{
-  color: red;
+  color: rgb(200,0,0);
 }
 .link-logo{
   height: 50px;

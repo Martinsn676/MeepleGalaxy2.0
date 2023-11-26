@@ -32,6 +32,11 @@
     text-align: center;}
 .lazy-margin *{
     margin:10px;}
+.grid-row-50{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+}
 /*========= Simple Grid =========*/
 
 .grid1{grid-area: grid1;}

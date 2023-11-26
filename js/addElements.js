@@ -15,8 +15,7 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     //missing info and errorhandling
     if(!type){type=["",999,999]}
     if(!order){order=["",""]}
-
-    
+  
     const functionLog = [place,headline,itemType,displayQuantity,type,order]
     const  mainContainer = document.querySelector(`#${place}`)
     mainContainer.innerHTML = `${cardSection(functionLog,headline)}`;
@@ -37,6 +36,7 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
         }); 
         mainContainer.classList.add("display-section","pc")
     }
+
     // handling template absed on product type
     if(itemType==="products"){
         mainTemplate = productMainClasses();

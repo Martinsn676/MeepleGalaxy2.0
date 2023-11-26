@@ -43,7 +43,7 @@ button:disabled {
 }
 #bottomLine{
     position: absolute;
-    
+    bottom: 0;
     width: 100%;
     z-index: 2;
 }
@@ -180,15 +180,11 @@ button:disabled {
     height: 50%;
 }
 .wide-blog-card{
-    width:100%;
+width: calc(100% - 20px);
     height: 200px;
 }
 
-.wide-blog-card .contain-image{
-    height: 150px;
-    min-width: 150px;
-    margin:10px
-}
+
 .wide-blog-card .text{
     overflow: hidden;
     height: 7rem;
