@@ -30,6 +30,10 @@ main section{
     background-color: rgb(100,100,100);
 
 }
+button:disabled {
+  cursor: default;
+  background-color: red;
+}
 .slider-buttons:active{
     background-color: rgb(70,70,70);
 }
@@ -60,7 +64,7 @@ main section{
 .slider{
   position: relative;
 }
-.topline-added{
+.display-section{
     padding-top: 30px;
     position: relative;
 }

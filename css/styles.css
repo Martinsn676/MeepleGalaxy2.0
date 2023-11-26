@@ -21,7 +21,10 @@ header a{
     background-repeat: no-repeat;
     background-position: center;
 }
-
+button:disabled {
+  cursor: default;
+  background-color: red;
+}
 .blog-image{
   height: 200px;
   width: 200px;

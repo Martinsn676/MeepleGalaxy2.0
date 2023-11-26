@@ -12,22 +12,35 @@
     <script src="js/templates.js"></script>
     <script src="js/addElements.js"></script>
     <script defer src="js/header&footer.js"></script>
+    <!-- Hotjar Tracking Code for Meeple Galaxy 2.0 -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:3756737,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
 </head>
 <body>
 <header>
 </header>
 <main>
     <section id="blogs-container"></section>
+    <section id="blogs-container2"></section>
     <section id="nanny"></section>
     <section id="products-container"></section>
 </main>
 <footer>
 </footer>
 <script>
-   addElements("nanny","Nanny","products",5,["loadMore",15,10],["titleAsc","hide"])
-
+    addElements("nanny","Nanny","products",5,["loadMore",15,10],["titleAsc","hide"])
     addElements("blogs-container","Latest posts","blogs",5,["slider",20,1],["dateDesc","hide"])
-   addElements("products-container","Games in our store","products",3,["slider",15,3])
+
+    addElements("blogs-container2","All posts","blogs",5,["slider",20,1],["titleDesc"])
+    addElements("products-container","Games in our store","products",3,["slider",15,3])
 </script>
 </body>
 </html>

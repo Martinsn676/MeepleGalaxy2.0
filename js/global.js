@@ -40,7 +40,6 @@ async function getApi(url, endUrlInfo) {
     } else {
       const json = await result.json();
       const data = await json;
-      console.log(data)
       return data;
     }
   } catch (err) {
@@ -57,9 +56,10 @@ async function getApi(url, endUrlInfo) {
 }
 
 function checkSlider(id,maxElements,slideJump) {
+  if(!slideJump){slideJump=1;}
   let sliderItems;
   let showNumber = 0;
- 
+  console.log(slideJump)
     function updateSlider(adjust, items) {
       let count = 0;
       let maxShow = window.innerWidth/150;
@@ -86,7 +86,13 @@ function checkSlider(id,maxElements,slideJump) {
   document.querySelector(`#${id} .right-slider`).addEventListener("click", () => updateSlider(slideJump, sliderItems));
   updateSlider(0, sliderItems)
 }
-
+function addModalClick(item){ 
+  item.forEach(element => {
+    element.addEventListener("click", (element)=>{
+      displayModal(element)
+    });
+  });
+}
 function displayModal(element){
   const modal = document.querySelector("#modal")
   if(modal){
@@ -98,13 +104,7 @@ function displayModal(element){
   }
 }
 
-function addModalClick(item){ 
-  item.forEach(element => {
-    element.addEventListener("click", (element)=>{
-      displayModal(element)
-    });
-  });
-}
+
 
 function cleanData(data){
   const div = document.createElement('div');
