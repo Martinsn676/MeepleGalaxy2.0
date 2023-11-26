@@ -12,26 +12,31 @@ body{
     margin: 0 auto;
 }
 .hideThis{display:none;}
-header a{
-    text-decoration:none;
-    color: var(--mainTextColor);
-}
+
 .contain-image{
     background-size:contain;
     background-repeat: no-repeat;
     background-position: center;
 }
-#main-content{
-  margin: 10px;
+
+/* ===== Header ===== */
+header a{
+    text-decoration:none;
+    color: var(--mainTextColor);
 }
-#loadMoreButton{
-  padding: 10px;
-  margin: 0;
+.link-logo{
+  height: 50px;
 }
-.blog-image{
-  height: 200px;
-  width: 200px;
+header a.active{
+  text-decoration:underline;
 }
+@media only screen and (max-width:900px){ 
+  #header{
+    flex-direction: column;
+  }
+}
+
+/* ===== Modal ===== */
 #modal-background{
   position: fixed;
   top:0px;
@@ -53,26 +58,39 @@ header a{
 #modal.hide-modal{
   display: none;
 }
-header a.active{
-  text-decoration:underline;
+
+/* ===== Contact us page ===== */
+#contactForms{
+  display: grid;
+  gap: 5px;
+  grid-template-areas:
+  'grid1 grid2'
+  'grid3 .'
+  'grid4 grid4';
 }
 #contactPage{
   padding: 20px;
   margin: 0 auto;
   max-width: 600px;
 }
-#contactPage .gridArea{
-  display: grid; 
-  gap:10px;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-  'grid1 grid2'
-  'grid3 .'
-  'grid4 grid4';
+#contactForms textarea{
+  width: calc(100% - 5px);
+  min-height: 80px;
 }
 #contactPage .label-text{
-  margin: 5px 0;
+  margin: 5px;
 }
+@media only screen and (max-width:400px){ 
+  #contactForms{
+    display: flex;
+    flex-direction: column;
+  }
+  #contactForms .label-text{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .message{
   font-size: 0.7rem;
   color: orange;
@@ -80,9 +98,51 @@ header a.active{
 .rough .message{
   color: rgb(200,0,0);
 }
-.link-logo{
-  height: 50px;
+
+/* ===== Info pages ===== */
+
+.info-page .top-line{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.info-page .overflow-hidden .text{
+  overflow: hidden;
+  height: 200px;
+}
+
+@media only screen and (max-width:500px){ 
+  .info-page .top-line{
+    flex-direction: column;
+  }
+}
+#hide-button{
+
+}
+#show-button{
+  display: none;
+}
+.overflow-hidden #hide-button{
+  display: none;
+}
+.overflow-hidden #show-button{
+  display: block;
 }
 .info-page{
   min-height: 200px;
+}
+#main-content{
+  margin: 10px;
+}
+.blog-image{
+  height: 200px;
+  width: 200px;
+}
+.info-page h1{
+  font-size: 20px;
+  margin: 10px;
+}
+.info-page h2{
+  font-size:15px;
+  margin: 10px;
 }

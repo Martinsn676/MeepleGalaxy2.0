@@ -30,11 +30,12 @@
 <body>
 <header>
 </header>
-<main id="contactPage">
+<main id="contactPage" class="flex-column align-column">
     <h1>Contact us</h1>
     <div id="saveMessage" class="flex-row align-row"></div>
-    <section class="gridArea group-flex-column">
-        
+
+    <section id="contactForms">
+      
         <div id="nameContainer" class="grid1">
             <div class="label-text">
                 <label for="nameField">Name:</label>
@@ -51,7 +52,7 @@
             <input type="email" id="input" name="message" placeholder="xxx@live.com">
             
         </div>
-
+        
         <div id="subjectContainer" class="grid3">
             <div class="label-text">    
                 <label for="subjectField">Subject:</label>

@@ -1,6 +1,6 @@
 /* ==== Header ==== */
 function headerTemplate(){return `
-<div class="links-passive flex-row align-row lazy-margin">    
+<div id="header" class="links-passive flex-row align-row lazy-margin">    
     <a href="index.html">
       <img class="link-logo" src="https://prototype.meeplegalaxy.com/wp-content/uploads/2023/11/logo_wide_b73121fc-20a9-4cbc-b723-f7f21b51c4ee.png">
     </a>
@@ -20,7 +20,7 @@ function cardSection(functionLog,headline){
           <h2>${headline}</h2>
           <div id="showingInfo"></div>
       </div>
-      <div id="sortButtonsID" class="sort-buttons flex-row no-wrap">
+      <div id="sortButtonsID" class="sort-buttons">
           ${addSortButton(functionLog,'titleAsc','Title Az')}
           ${addSortButton(functionLog,'titleDesc','Title Za')}
           ${addSortButton(functionLog,'dateAsc','Latest')}
@@ -107,18 +107,29 @@ function wideBlogTemplate(element){return`
   `;}
 
 function blogPageTemplate(element){return `
-    <div class="flex-row">
+    <div class="top-line">
       <div class="contain-image blog-image image" style="background-image: url('${element.jetpack_featured_media_url}')"></div>  
-      <div cless="flex-colum">
+      <div class="flex-colum">
         <h2>${cleanTime(element.date)}</h2>
         <h1>${element.title.rendered}</h1>
       </div>
     </div>
-    <p>
-      ${element.content.rendered}
-    </p>
-  `;}
 
+    <div class="text-box overflow-hidden">
+      <div class="text">
+        ${element.content.rendered}
+      </div>
+      <button id="show-button" onclick="toggleText()">Show</button>
+      <button id="hide-button" onclick="toggleText()">Hide</button>
+    </div>
+    
+  `;}
+function toggleText(){
+ 
+  test = document.querySelector(".text-box")
+  console.log(test)
+  test.classList.toggle("overflow-hidden")
+}
 function sliderButtonsTemplate(){return`
     <button class="left-slider slider-buttons"></button>
     <button class="right-slider slider-buttons"></button>

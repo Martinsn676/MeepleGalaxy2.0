@@ -1,4 +1,4 @@
-/* ===== Menu card ===== */
+/* ===== Menu for cards ===== */
 button{
     background-color:var(--cardBGColor);
     margin: 5px;
@@ -18,21 +18,16 @@ button{
 #elements-container{
     width: 100%;
 }
-#topLine h2{
-    margin: 0;
-}
+
 main section{
     position: relative;
-   
 }
-
 .fully-loaded .slider-buttons:hover, .fully-loaded .card:hover, button:hover{
     background-color: rgb(100,100,100);
-
 }
 button:disabled {
   cursor: default;
-  background-color: red;
+  
 }
 .slider-buttons:active{
     background-color: rgb(70,70,70);
@@ -41,18 +36,20 @@ button:disabled {
     padding:8px;
     margin:2px;
 }
-#bottomLine{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    z-index: 2;
+#topLine h2{
+    margin: 0;
 }
 .pc #topLine>div{
     position: absolute;
     top:0px;
     z-index: 2;
 }
-
+#bottomLine{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+}
 
 /* ===== Slider card ===== */
 .slider{
@@ -88,9 +85,7 @@ button:disabled {
   border-radius: 100px 0 0 100px;
   right: var(--bodyMaxWidth);
 }
-.slider .hidden-slider {
-  display: none;
-}
+.slider .hidden-slider {display: none;}
 
 @media only screen and (max-width:899px){
   .slider-buttons{
@@ -99,13 +94,11 @@ button:disabled {
   .slider{
     overflow: hidden;
   }
-
 }
 @media only screen and (min-width:900px){
     .slider .card{
         flex: 1 1 0;
     }
-
 }
 /* ===== General card ===== */
 .card{
@@ -116,21 +109,20 @@ button:disabled {
     color:var(--cardTitleColor);
     background-color: var(--cardBGColor);
 }
-
 .card h6{
     padding:5px;
     margin-top:0;
     margin-bottom:5px;
 }
-
 .card{cursor: pointer;}
 
 .big-card a,.blog-card a, .card a{
     color: var(--cardTitleColor);
     text-decoration:none;
 }
-.showOnHower{
-    display: none;
+#loadMoreButton{
+  padding: 10px;
+  margin: 0;
 }
 
 /* ===== Product card ===== */
@@ -179,12 +171,6 @@ button:disabled {
 .blog-card > div{
     height: 50%;
 }
-.wide-blog-card{
-width: calc(100% - 20px);
-    height: 200px;
-}
-
-
 .wide-blog-card .text{
     overflow: hidden;
     height: 7rem;
@@ -194,27 +180,25 @@ width: calc(100% - 20px);
 .blog-card .contain-image{
     height: 70%;
     width: 100%;
-    
 }
 @media only screen and (min-width:900px){
-    .blog-card{width: calc(20% - 20px);}   
-    .product-card{width: calc(20% - 20px);}   
-
+    .card{width: calc(20% - 20px);}   
 }
 @media only screen and (max-width:899px){
-.blog-card{width: calc(33% - 20px);}   
-.product-card{width: calc(33% - 20px);}   
+
+    .card{width: calc(33% - 20px);}   
 }
 @media only screen and (max-width:599px){
-
-.blog-card{width: calc(50% - 20px);}
-.product-card{width: calc(50% - 20px);}  
+    .card{width: calc(50% - 20px);}
 }
 @media only screen and (max-width:315px){
-
-.blog-card{width: calc(100% - 20px);}
-.product-card{width: calc(100% - 20px);}  
+    .card{width: calc(100% - 20px);}
 }
+.wide-blog-card{
+    width: calc(100% - 20px);
+    height: 200px;
+}
+
 /* ===== Cards functions and extras ===== */
 div.scroll {
     margin:4px, 4px;
