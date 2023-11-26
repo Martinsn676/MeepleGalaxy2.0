@@ -13,6 +13,30 @@ function headerTemplate(){return `
 </div>
   `;}
 
+function cardSection(functionLog,headline){
+  return `
+    <div id="topLine">
+      <div class="flex-cloumn"> 
+          <h2>${headline}</h2>
+          <div id="showingInfo"></div>
+      </div>
+      <div id="sortButtonsID" class="sort-buttons flex-row no-wrap">
+          ${addSortButton(functionLog,'titleAsc','Title Az')}
+          ${addSortButton(functionLog,'titleDesc','Title Za')}
+          ${addSortButton(functionLog,'dateAsc','Latest')}
+          ${addSortButton(functionLog,'dateDesc','Oldest')}
+      </div>
+    </div>
+
+    <section id='elements-container' class='flex-row flex-wrap'>
+    </section>
+
+    <div id="bottomLine">
+        <div id="loadMoreContainer" class="full-width align-column flex-column">
+        </div>  
+    </div>
+  `
+}
 /* ==== Products ==== */
 function productMainClasses(){return `
   card product-card flex-row`;}
@@ -115,10 +139,7 @@ function addSortButton(log, order, orderName) {
 
 function sortButtonClick(param1, param2, param3, param4, param5, order) {
   //To prevent button jump on page
-  allButons = document.querySelectorAll("button");
-  allButons.forEach(element => {
-    element.disabled=true;
-  });
+  
   const scrollPosition = window.scrollY;
   addElements(param1, param2, param3, param4, param5, [order]);
   window.scrollTo(0, scrollPosition);

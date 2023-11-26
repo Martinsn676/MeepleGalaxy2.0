@@ -10,33 +10,52 @@ let titleDesc = 'orderby=title&order=desc';
 let dateAsc = 'orderby=date&order=asc';
 let dateDesc = 'orderby=date&order=desc';
 let standardSort = `titleAsc`;
-
-async function getApi(url,endUrlInfo) {
-  let endUrl = ""
-  if(endUrlInfo){
-    for(let i = 0 ; i < endUrlInfo.length; i++){
-      if(i===0){
-        endUrl+="?"+endUrlInfo[i];
-      }else{
-        endUrl+="&"+endUrlInfo[i];
+async function getApi(url, endUrlInfo) {
+  let endUrl = "";
+  if (endUrlInfo) {
+    for (let i = 0; i < endUrlInfo.length; i++) {
+      if (i === 0) {
+        endUrl += "?" + endUrlInfo[i];
+      } else {
+        endUrl += "&" + endUrlInfo[i];
       }
     }
   }
+
+  // Create an AbortController and an AbortSignal.
+  const controller = new AbortController();
+  const signal = controller.signal;
+
+  // Add an event listener to handle the page unload.
+  window.addEventListener('beforeunload', () => {
+    controller.abort();
+  });
+
   try {
-    //console.log("api: ",url + endUrl)
-    const result = await fetch(url + endUrl);
+    // Make the fetch request with the signal option.
+    const result = await fetch(url + endUrl, { signal });
+
     if (!result.ok) {
       throw new Error(`HTTP error! Status: ${result.status}`);
-    }else{
+    } else {
       const json = await result.json();
       const data = await json;
+      console.log(data)
       return data;
     }
   } catch (err) {
-    document.querySelector("main").innerHTML = "We are sorry, we couldn't connect with the server";
-    console.log("getApi error:" + err +" when trying to load: "+url + endUrl);
+
+    // Log the full error for further investigation.
+    console.error('getApi error:', err, 'when trying to load:', url + endUrl);
+    
+  } finally {
+    // Remove the event listener when the fetch is complete or has failed.
+    window.removeEventListener('beforeunload', () => {
+      controller.abort();
+    });
   }
 }
+
 function checkSlider(id,maxElements,slideJump) {
   let sliderItems;
   let showNumber = 0;
@@ -47,7 +66,7 @@ function checkSlider(id,maxElements,slideJump) {
 
       showNumber += adjust;      
       if(showNumber<0){
-        showNumber +=items.length-maxElements;
+        showNumber +=items.length-maxElements-1;
       }
       if(showNumber>items.length-maxElements){
         showNumber-=items.length-maxElements

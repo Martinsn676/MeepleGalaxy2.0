@@ -1,52 +1,7 @@
 //console.log("product.js")
 
-function addAttributes(type,element){
-let newHtml = "" 
-element.attributes.forEach(element => {
-    if(element.name.toLowerCase()===type){
-        if(type==="pc"){
-            if(!element.terms[1].name){
-                end = ` player`
-            }else{
-                end = `-${element.terms[1].name} players`
-            }
-            newHtml+=`${element.terms[0].name+end}`
-        }
-        if(type==="pt"){
-                if(!element.terms[1].name){
-                end = ` min`
-            }else{
-                end = `-${element.terms[1].name} min`
-            }
-            newHtml+=`${element.terms[0].name+end}`
-        }
-        if(type==="dg"){
-            newHtml="Designers: "
-            element.terms.forEach(element => {
-                newHtml+=`<a href="#${element.name}">${element.name}</a> `
-            });
-        }
-        if(type==="bgg"){
-            newHtml=`<a href='${element.terms[0].name}' target='_blank'><img class="link-logo" src='https://prototype.meeplegalaxy.com/wp-content/uploads/2023/11/BoardGameGeek_Logo.svg_.png'></a>`
-        }
-    }
-});
-return newHtml
-}
-
-function quickView(product) {
-    //displayModal(product)
-    const quickViewContainer = document.querySelector(".quickView-container")
-    if(quickViewContainer){
-        quickViewContainer.innerHTML = `${quickViewTemplate(product)}`;
-    }else{
-       localStorage.setItem('speedLoad', JSON.stringify(product));
-       location.href=`productPage.html?id=${product.id}`;
-    }
-}
-
-async function addElements(place,headline,itemType,quantity,type,order) {
-    
+async function addElements(place,headline,itemType,displayQuantity,type,order) {
+    let loadMore = false;
     let slider = false;
     let loadExtra = 0;
     let apiUrl
@@ -57,7 +12,7 @@ async function addElements(place,headline,itemType,quantity,type,order) {
     let secondLoadNumber
     let maxElements = 999
     mainContainer.innerHTML=""
-    loadNumber = quantity;
+    loadNumber = displayQuantity;
     mainContainer.classList.add("topline-added")
     //missing info and errorhandling
     if(!type){
@@ -68,13 +23,13 @@ async function addElements(place,headline,itemType,quantity,type,order) {
     }
     if(window.innerWidth<900){
         type = ["loadMore",12]
-        quantity = 6
+        displayQuantity = 6
         console.log("mobile version")
         window.addEventListener("resize", ()=> {
             resizeCheck("mobile",window.innerWidth)
         }); 
     }
-    const functionLog = [place,headline,itemType,quantity,type,order]
+    const functionLog = [place,headline,itemType,displayQuantity,type,order]
 
     if(itemType==="products"){
         mainTemplate = productMainClasses()
@@ -85,29 +40,17 @@ async function addElements(place,headline,itemType,quantity,type,order) {
         apiUrl = blogsUrl
     }
     if(itemType==="wide-blogs"){
-        
         mainTemplate = wideBlogMainClasses();
         apiUrl = blogsUrl;
     }
-    mainContainer.innerHTML += `
-    <div id="topLine">
-        <div class="flex-cloumn"> 
-            <h2>${headline}</h2>
-            <div id="showingInfo"></div>
-        </div>
-        <div id="sortButtonsID" class="sort-buttons flex-row no-wrap">
-            ${addSortButton(functionLog,'titleAsc','Title Az')}
-            ${addSortButton(functionLog,'titleDesc','Title Za')}
-            ${addSortButton(functionLog,'dateAsc','Latest')}
-            ${addSortButton(functionLog,'dateDesc','Oldest')}
-        </div>
-    </div>
-    `;
+
+    mainContainer.innerHTML += `${cardSection(functionLog,headline)}`
     
-    mainContainer.innerHTML+="<section id='elements-container' class='flex-row flex-wrap'></section>"
+    
     if(type[0]==="loadMore"){
-        mainContainer.innerHTML+=`<div id="loadMoreContainer" class="full-width align-column flex-column"></div> `; 
         secondLoadNumber = type[1];
+        loadMore=true;
+
     }
     if(order[0]===""){
         orderName = standardSort
@@ -135,44 +78,50 @@ async function addElements(place,headline,itemType,quantity,type,order) {
         container.classList.add("slider")
         loadExtra = document.body.clientWidth/150
         slider=true;
-        maxElements = type[1]
+        maxElements = displayQuantity
+        apiLoadQuantity = type[1]
+        
         for(let i = 0 ; i < loadExtra && i < maxElements ; i++){
             container.innerHTML+=`<div class="loading-card ${mainTemplate}"></div>`;
         }
     }else{
-        for(let i = 0 ; i < quantity ; i++){
+        apiLoadQuantity=displayQuantity
+        for(let i = 0 ; i < displayQuantity ; i++){
             container.innerHTML+=`<div class="loading-card ${mainTemplate}"></div>`;
         }
     }
-    
-    
-    
-    const loadMoreContainer = mainContainer.querySelector("#loadMoreContainer")
-    const elements = await getApi(apiUrl,[perPage+quantity,urlOrder]);
+    let loadMoreElements
+    let addNumber
+    const elements = await getApi(apiUrl,[perPage+displayQuantity,urlOrder]);
+
+
+        
 
     if(slider){
         container.innerHTML=`${sliderButtonsTemplate()}`;
-        }else{
-            container.innerHTML=""
-        }  
-    let loadMoreElements
-    renderElements(elements,0)
-  
+    
 
-    async function renderElements(elements,skipNumber){
-        let addNumber = skipNumber;
-      
-        for (let i = skipNumber; i < quantity + skipNumber + loadExtra  ; i++) {
+    }else{
+        container.innerHTML=""
+    }  
+    renderElements(elements,(elements.length),itemType)
+    if(slider){
+        const allElements = await getApi(apiUrl,[perPage+apiLoadQuantity,urlOrder]);
+        
+        renderElements(allElements,(allElements.length+loadExtra),itemType,displayQuantity)
+    }
+
+    addFunctions()
+    mainContainer.classList.add("fully-loaded")
+
+    async function renderElements(elements,quantity,itemType,skipNumber){
+        if(!skipNumber){skipNumber=0;}
+        console.log(itemType,elements.length)
+        addNumber=skipNumber
+        for (let i = skipNumber; i < quantity + skipNumber  ; i++) {
             const card = document.createElement('div');
             card.setAttribute('tabindex', '0');
-            card.addEventListener('keydown', function (event) {
-  // Check if the pressed key is "Enter" (key code 13)
-  if (event.keyCode === 13) {
-    // Perform the action, e.g., navigate to a product page
-    window.location.href = 'path/to/product/page';
-  }
-            });
-            if(addNumber===elements.length && slider){
+            if(slider && addNumber===elements.length){
                 addNumber = 0;
             }
             const element = elements[addNumber];
@@ -198,6 +147,10 @@ async function addElements(place,headline,itemType,quantity,type,order) {
             
             container.appendChild(card);
             addNumber++
+            if(!elements[addNumber] && loadMore && skipNumber >0){
+
+                mainContainer.querySelector("#loadMoreContainer").innerHTML=""
+            }
             card.addEventListener('click',()=>goToPage(itemType,element))
             card.addEventListener('keydown', function (event) {
                 if (event.keyCode === 13) {
@@ -205,19 +158,23 @@ async function addElements(place,headline,itemType,quantity,type,order) {
                 }
             });
         }
+    }
+    async function addFunctions(){
         if(slider){
             checkSlider(mainContainer.id,maxElements,type[2])
         }
-        if(loadMoreContainer){    
-            loadMoreContainer.innerHTML=""
+
+        if(loadMore){  
+            const loadMoreContainer = mainContainer.querySelector("#loadMoreContainer")
+            
             if(!loadMoreElements){
                 loadMoreElements = await getApi(apiUrl,[perPage+secondLoadNumber,urlOrder]);
             }
-            mainContainer.querySelector("#showingInfo").innerHTML=`Showing ${addNumber} of ${loadMoreElements.length}`       
 
             if(loadMoreElements.length>addNumber){
+                loadMoreContainer.innerHTML=""
                 loadMoreContainer.innerHTML=`<button id="loadMoreButton" >load more</button> `
-                mainContainer.querySelector("#loadMoreButton").addEventListener("click",()=>renderElements(loadMoreElements,addNumber))
+                mainContainer.querySelector("#loadMoreButton").addEventListener("click",()=>renderElements(loadMoreElements,displayQuantity,itemType,addNumber))
             }
         }
         //To keep sort buttons disabled to after load
@@ -225,11 +182,12 @@ async function addElements(place,headline,itemType,quantity,type,order) {
         allButons.forEach(element => {
             element.disabled=false;
         });
+        mainContainer.classList.add("loaded")
     }
 }
 function goToPage(itemType,element){
     localStorage.setItem('speedLoad', JSON.stringify(element));
-    if(itemType==="blogs"){  
+    if(itemType==="blogs" || itemType==="wide-blogs"){  
         location.href=`blogPage.html?id=${element.id}`;
     }else if(itemType==="products"){
         location.href=`productPage.html?id=${element.id}`;
@@ -238,5 +196,49 @@ function goToPage(itemType,element){
 function resizeCheck(changeFrom,width){
     if(changeFrom==="mobile" && width>900){
         console.log("change to pc")
+    }
+}
+function addAttributes(type,element){
+    let newHtml = "" 
+    element.attributes.forEach(element => {
+        if(element.name.toLowerCase()===type){
+            if(type==="pc"){
+                if(!element.terms[1].name){
+                    end = ` player`
+                }else{
+                    end = `-${element.terms[1].name} players`
+                }
+                newHtml+=`${element.terms[0].name+end}`
+            }
+            if(type==="pt"){
+                    if(!element.terms[1].name){
+                    end = ` min`
+                }else{
+                    end = `-${element.terms[1].name} min`
+                }
+                newHtml+=`${element.terms[0].name+end}`
+            }
+            if(type==="dg"){
+                newHtml="Designers: "
+                element.terms.forEach(element => {
+                    newHtml+=`<a href="#${element.name}">${element.name}</a> `
+                });
+            }
+            if(type==="bgg"){
+                newHtml=`<a href='${element.terms[0].name}' target='_blank'><img class="link-logo" src='https://prototype.meeplegalaxy.com/wp-content/uploads/2023/11/BoardGameGeek_Logo.svg_.png'></a>`
+            }
+        }
+    });
+    return newHtml;
+}
+
+function quickView(product) {
+    //displayModal(product)
+    const quickViewContainer = document.querySelector(".quickView-container")
+    if(quickViewContainer){
+        quickViewContainer.innerHTML = `${quickViewTemplate(product)}`;
+    }else{
+       localStorage.setItem('speedLoad', JSON.stringify(product));
+       location.href=`productPage.html?id=${product.id}`;
     }
 }

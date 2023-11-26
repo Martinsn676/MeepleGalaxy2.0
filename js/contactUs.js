@@ -21,13 +21,12 @@ s
                 return input;
             }  
         }
-        messageField.innerText = `Please write your full name`
         return (false);
     }else if(input.length>req-1){
         messageField.innerText = "";
         return input;
     }else{
-        messageField.innerText = `${neg} (${input.length}/${req})`
+        messageField.innerText = `${neg} ${input.length}/${req}`
         return (false);
     }
 }
@@ -90,6 +89,7 @@ function checkAllInputs(){
         localStorage.clear()
         localStorage.setItem('message', JSON.stringify(sumbitArray));
     }else{
+        document.querySelector("#submitMessage").innerText=`Please correct ${errors} error(s)`
         document.querySelector("#contactPage").classList.add("rough")
     }
     }

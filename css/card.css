@@ -25,12 +25,31 @@ main section{
     position: relative;
     padding: 20px 0;
 }
-.slider-buttons:hover, .card:hover, button:hover{
+
+.fully-loaded .slider-buttons:hover, .fully-loaded .card:hover, button:hover{
     background-color: rgb(100,100,100);
+
 }
-.slider-buttons:active, button:active{
+.slider-buttons:active{
     background-color: rgb(70,70,70);
 }
+.card:hover{
+    padding:8px;
+    margin:2px;
+}
+#bottomLine{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    z-index: 2;
+}
+#topLine>div{
+    position: absolute;
+    top:0px;
+    z-index: 2;
+}
+
+
 /* ===== Slider card ===== */
 .slider{
     width: 100%;
@@ -82,10 +101,7 @@ main section{
     .slider .card{
         flex: 1 1 0;
     }
-#topLine>div{
-        position: absolute;
-        top:0px;
-    }
+
 }
 /* ===== General card ===== */
 .card{
@@ -112,9 +128,7 @@ main section{
 .showOnHower{
     display: none;
 }
-.card:hover .showOnHower{
-    display: block;
-}
+
 /* ===== Product card ===== */
 
 .product-card{
