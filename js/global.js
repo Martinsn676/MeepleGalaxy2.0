@@ -131,3 +131,9 @@ function cleanTime(date){
   const formattedDate = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY');
   return formattedDate
 }
+
+
+function handleFocus(element) {
+      quickView(element);
+      // You can do additional actions or apply styles here
+    }

@@ -41,6 +41,7 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     if(itemType==="products"){
         mainTemplate = productMainClasses();
         apiUrl = productsUrl;
+        
     }
     if(itemType==="blogs"){
         mainTemplate = blogMainClasses();
@@ -50,7 +51,9 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
         mainTemplate = wideBlogMainClasses();
         apiUrl = blogsUrl;
     }
-
+    mainContainer.querySelector("#sortButtonsID").innerHTML+=`
+        ${addSortButton(functionLog,[['titleAsc','Title Az'],['titleDesc','Title Za'],['dateDesc','Newest'],['dateDesc','Oldest']])}
+    `;
 
     // handling sorting
     if(order[0]===""){
@@ -61,7 +64,10 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     if(order[1]==="hide"){
         mainContainer.querySelector(".sort-buttons").classList.add("hide")
     }
-    mainContainer.querySelector(`#${orderName}`).classList.add("selected-sort")
+    // marking the selected sort
+    const selectedSort = mainContainer.querySelector(`#${orderName}`)
+    if(selectedSort){selectedSort.classList.add("selected-sort")}
+
     if(orderName === "titleAsc"){
         urlOrder = titleAsc
     }else if(orderName ==="titleDesc"){
@@ -147,6 +153,12 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
             card.addEventListener('click',()=>goToPage(itemType,element))
             // add keyboard click
             card.setAttribute('tabindex', '0');
+            card.addEventListener('focus', function() {
+
+                quickView(element);
+                window.scrollTo(0, 0);
+            // You can do additional actions or apply styles here
+            });
             card.addEventListener('keydown', function (event) {
                 if (event.keyCode === 13) {
                     goToPage(itemType,element)
@@ -240,6 +252,9 @@ function addAttributes(type,element){
 
 function quickView(product) {
     //displayModal(product)
+
+
+
     const quickViewContainer = document.querySelector(".quickView-container")
     if(quickViewContainer){
         quickViewContainer.innerHTML = `${quickViewTemplate(product)}`;
@@ -248,4 +263,6 @@ function quickView(product) {
        localStorage.setItem('speedLoad', JSON.stringify(product));
        location.href=`productPage.html?id=${product.id}`;
     }
+
+
 }

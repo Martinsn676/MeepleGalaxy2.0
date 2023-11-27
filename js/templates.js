@@ -21,10 +21,7 @@ function cardSection(functionLog,headline){
           <div id="showingInfo"></div>
       </div>
       <div id="sortButtonsID" class="sort-buttons">
-          ${addSortButton(functionLog,'titleAsc','Title Az')}
-          ${addSortButton(functionLog,'titleDesc','Title Za')}
-          ${addSortButton(functionLog,'dateAsc','Latest')}
-          ${addSortButton(functionLog,'dateDesc','Oldest')}
+
       </div>
     </div>
 
@@ -46,7 +43,7 @@ function productTemplate(element){return `
       <div>${element.name}</div>
       <span>${addAttributes("pc",element)} </span>
       <span>${addAttributes("pt",element)} </span>
-      <h6 class="showOnHower">Go to</h6>
+      
     </div>
   `;}
 
@@ -99,9 +96,9 @@ function wideBlogTemplate(element){return`
     </div>
     <div class="grid-row-50">
       <div class="contain-image image" style="background-image: url('${element.jetpack_featured_media_url}')"></div>
-      <div class="">
+      <div >
         <p class="text">${cleanData(element.content.rendered)}</p>
-        <div >Read more</div> 
+        
       </div>   
     </div>
   `;}
@@ -142,10 +139,12 @@ function modalTemplate(){return`
     </div>
     `}
 
-function addSortButton(log, order, orderName) {
-    return `
-      <button type="button" disabled="true" id='${order}' onclick="sortButtonClick('${log[0]}', '${log[1]}', '${log[2]}', ${log[3]}, ['${log[4][0]}', ${log[4][1]}, ${log[4][2]}], '${order}')">${orderName}</button>
-    `;
+function addSortButton(log, order) {
+    let output = ""
+    order.forEach(element => {
+     output+=`<button type="button" disabled="true" id='${element[0]}' onclick="sortButtonClick('${log[0]}', '${log[1]}', '${log[2]}', ${log[3]}, ['${log[4][0]}', ${log[4][1]}, ${log[4][2]}], '${element[0]}')">${element[1]}</button>`
+    });
+    return output
 }
 
 function sortButtonClick(param1, param2, param3, param4, param5, order) {

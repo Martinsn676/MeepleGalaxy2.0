@@ -39,7 +39,7 @@ button:disabled {
 #topLine h2{
     margin: 0;
 }
-.pc #topLine>div{
+.pc .sort-buttons{
     position: absolute;
     top:0px;
     z-index: 2;
@@ -62,7 +62,7 @@ button:disabled {
   position: relative;
 }
 .display-section{
-    padding:40px 0;
+    padding:10px 0 40px 0;
     position: relative;
 }
 .slider-buttons {
@@ -173,7 +173,7 @@ button:disabled {
 }
 .wide-blog-card .text{
     overflow: hidden;
-    height: 7rem;
+    height: 9rem;
     margin: 10px 0;
     font-size: 1rem;
 }
@@ -215,7 +215,7 @@ div.scroll {
     scrollbar-width: thin;
 }
 .loading-card{
-    animation: loadingAnimation 1s infinite ;
+    animation: loadingAnimation 2s infinite ;
     opacity: 0.5;
 }
 @keyframes loadingAnimation {
