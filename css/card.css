@@ -101,7 +101,7 @@ button:disabled {
     }
 }
 /* ===== General card ===== */
-.card{
+.card, .big-card{
     padding: 5px;
     border-radius: 5px;
     margin: 5px;
@@ -142,8 +142,13 @@ button:disabled {
     font-size: 0.7rem;
 }
 .big-card{
-    
     height: 500px;
+}
+.big-card .grid1{
+    height: 150px;
+}
+.big-card h6{
+    margin: 10px;
 }
 .big-card .contain-image{
     height: 100%;
@@ -173,7 +178,7 @@ button:disabled {
 }
 .wide-blog-card .text{
     overflow: hidden;
-    height: 9rem;
+    height: 8.5rem;
     margin: 10px 0;
     font-size: 1rem;
 }
@@ -182,23 +187,23 @@ button:disabled {
     width: 100%;
 }
 @media only screen and (min-width:900px){
-    .card{width: calc(20% - 20px);}   
+    .small-card{width: calc(20% - 20px);}   
 }
 @media only screen and (max-width:899px){
 
-    .card{width: calc(33% - 20px);}   
+    .small-card{width: calc(33% - 20px);}   
 }
 @media only screen and (max-width:599px){
-    .card{width: calc(50% - 20px);}
+    .small-card{width: calc(50% - 20px);}
 }
 @media only screen and (max-width:315px){
-    .card{width: calc(100% - 20px);}
+    .small-card{width: calc(100% - 20px);}
 }
 .wide-blog-card{
     width: calc(100% - 20px);
     height: 200px;
 }
-.card.big-card{
+.big-card{
     width: 100%;
 }
 /* ===== Cards functions and extras ===== */

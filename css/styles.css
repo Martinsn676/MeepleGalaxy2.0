@@ -47,13 +47,14 @@ header a.active{
   background-color: grey;
   opacity: 0.4;
 }
-#modal .blog-image{
+#modal .contain-image{
   height: var(--modalImageSize);
   width: var(--modalImageSize);
   position: fixed;
   left: calc(50vw - var(--modalImageSize)/2);
   top:calc(50vh - var(--modalImageSize)/2);
   opacity:1;
+  z-index: 3;
 }
 #modal.hide-modal{
   display: none;

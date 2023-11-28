@@ -7,10 +7,10 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     let apiUrl
     let urlOrder
     let orderName
-    let loadMoreElements
     let addNumber
     let secondLoadNumber
     let maxElements = 999
+    let allElements
 
     //missing info and errorhandling
     if(!type){type=["",999,999]}
@@ -18,11 +18,11 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
   
     const functionLog = [place,headline,itemType,displayQuantity,type,order]
     const  mainContainer = document.querySelector(`#${place}`)
-    mainContainer.innerHTML = `${cardSection(functionLog,headline)}`;
+    mainContainer.innerHTML = `${cardSection(functionLog)}`;
     const container = mainContainer.querySelector("#elements-container")
     
     // alpha, mobile version instead
-    if(window.innerWidth<900){
+    if(window.innerWidth<900 && type[0]==="slider"){
         type = ["loadMore",12]
         displayQuantity = 6
         console.log("mobile version")
@@ -79,7 +79,6 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     else if(orderName ==="dateDesc"){
         urlOrder = dateDesc
     }
-
     if(type[0]==="loadMore"){
         secondLoadNumber = type[1];
         loadMore=true;
@@ -101,7 +100,6 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
             container.innerHTML+=`<div class="loading-card ${mainTemplate}"></div>`;
         }
     }
-    
     // api call what is first viewed
     const elements = await getApi(apiUrl,[perPage+displayQuantity,urlOrder]);
     if(elements){
@@ -119,13 +117,22 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
         // mark container as fully loaded
         mainContainer.classList.add("fully-loaded")
     }
-    async function renderElements(elements,quantity,itemType,skipNumber){
-        if(!skipNumber){skipNumber=0;}
-
-        addNumber=skipNumber
-        for (let i = skipNumber; i < quantity + skipNumber  ; i++) {
-            const card = document.createElement('div');
+    
+    async function renderElements(elements,quantity,itemType,skipNumber,searching){
+        let inSearch = false;
+        let elementName
+        console.log(elements,quantity,itemType,skipNumber,searching)
+       //if(renderContainer==="" && !search){break;}
+        if(searching && searching[0]==="searching"){
             
+            inSearch = true
+        }
+        if(!skipNumber){skipNumber=0;}
+        addNumber=skipNumber
+
+        
+        for (let i = skipNumber; i < quantity + skipNumber  ; i++) {
+       
 
             if(slider && addNumber===elements.length){
                 addNumber = 0;
@@ -134,15 +141,32 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
             if(!element){
                 break;
             }
+            if(inSearch){
+                if(searching[1]===""){
+                    break;
+                }else{
+                    if(itemType==="products"){
+                        elementName = element.name
+                    }else{
+                        elementName = element.title.rendered
+                    }
+                }
+                if(elementName.toLowerCase().startsWith(searching[1].trim().toLowerCase())){
+                }else{
+                    addNumber++
+                    continue;
+                }
+            }
+
+            
+            const card = document.createElement('div');
             if(itemType==="products"){
                 card.className = productMainClasses();
                 card.innerHTML = productTemplate(element)
             }
             if(itemType==="blogs"){
                 card.className = blogMainClasses();
-                
                 card.innerHTML = blogTemplate(element)
-                
             }
             if(itemType==="wide-blogs"){
                 card.className = wideBlogMainClasses();
@@ -153,41 +177,53 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
             card.addEventListener('click',()=>goToPage(itemType,element))
             // add keyboard click
             card.setAttribute('tabindex', '0');
-            card.addEventListener('focus', function() {
 
-                quickView(element);
-                window.scrollTo(0, 0);
-            // You can do additional actions or apply styles here
-            });
             card.addEventListener('keydown', function (event) {
                 if (event.keyCode === 13) {
                     goToPage(itemType,element)
                 }
             });
-
-            container.appendChild(card);
+            card.addEventListener('focus', function() {
+                quickView(element);
+                window.scrollTo(0, 0);
+            });
+            
+                
+            if(inSearch){
+                document.querySelector("#search-container").appendChild(card);
+            }else{
+                container.appendChild(card);
+            }
             addNumber++
             // hide load-more button if showing all
-            if(!elements[addNumber] && loadMore && skipNumber >0){
-                mainContainer.querySelector("#loadMoreContainer").innerHTML=""
+            if(loadMore){
+                if(!elements[addNumber] && skipNumber >0){
+                    mainContainer.querySelector("#loadMoreContainer").innerHTML=""
+                }
+                //mainContainer.querySelector("#showingInfo").innerHTML=`Showing ${addNumber} of `
             }
+           
+                
+            
             
         }
     }
     async function addFunctions(){
+        
         if(slider){
-            const allElements = await getApi(apiUrl,[perPage+apiLoadQuantity,urlOrder]);
+            allElements = await getApi(apiUrl,[perPage+apiLoadQuantity,urlOrder]);
             renderElements(allElements,(allElements.length+loadExtra),itemType,displayQuantity)
             checkSlider(mainContainer.id,maxElements,type[2])
         }
         if(loadMore){  
             const loadMoreContainer = mainContainer.querySelector("#loadMoreContainer")
-            
-            loadMoreElements = await getApi(apiUrl,[perPage+secondLoadNumber,urlOrder]);
-            if(loadMoreElements.length>addNumber){
+            allElements = await getApi(apiUrl,[perPage+secondLoadNumber,urlOrder]);
+            if(allElements.length>addNumber){
+                const skipNumber = addNumber
                 loadMoreContainer.innerHTML=""
                 loadMoreContainer.innerHTML=`<button id="loadMoreButton" >load more</button> `
-                mainContainer.querySelector("#loadMoreButton").addEventListener("click",()=>renderElements(loadMoreElements,displayQuantity,itemType,addNumber))
+                console.log(allElements,displayQuantity,itemType,addNumber)
+                mainContainer.querySelector("#loadMoreButton").addEventListener("click",()=>renderElements(allElements,allElements.length,itemType,skipNumber))
             }
         }
         //To keep sort buttons disabled to after load
@@ -195,7 +231,24 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
         allButons.forEach(element => {
             element.disabled=false;
         });
+        const searchField = document.querySelector('#search-input')
+
+        function updateSearch(){
+                console.log("sadfsadsad")
+                searchContainer = document.querySelector("#search-container")
+                searchContainer.innerHTML =""
+                searchInput = document.querySelector("#search-input")
+                renderElements(allElements,allElements.length,itemType,0,['searching',searchInput.value])
+            }     
+        if(searchField){
+            document.querySelector("#search-input").addEventListener('keyup', function (){
+                const scrollPosition = window.scrollY;
+                updateSearch()
+                window.scrollTo(0, scrollPosition);
+            });
+        }
     }
+
 }
 function goToPage(itemType,element){
     localStorage.setItem('speedLoad', JSON.stringify(element));
@@ -203,7 +256,7 @@ function goToPage(itemType,element){
         location.href=`blogPage.html?id=${element.id}`;
     }else if(itemType==="products"){
         quickView(element)
-       // location.href=`productPage.html?id=${element.id}`;
+        
     }
 }
 function resizeCheck(changeFrom,width){
@@ -250,19 +303,13 @@ function addAttributes(type,element){
     return newHtml;
 }
 
-function quickView(product) {
-    //displayModal(product)
-
-
-
+function quickView(element) {
     const quickViewContainer = document.querySelector(".quickView-container")
     if(quickViewContainer){
-        quickViewContainer.innerHTML = `${quickViewTemplate(product)}`;
-        addModalClick(document.querySelectorAll("contain-image"))
+        quickViewContainer.innerHTML = `${quickViewTemplate(element)}`;
+        addModalClick(document.querySelectorAll(".big-card .image"))
     }else{
-       localStorage.setItem('speedLoad', JSON.stringify(product));
-       location.href=`productPage.html?id=${product.id}`;
+        location.href=`productPage.html?id=${element.id}`;
     }
-
 
 }

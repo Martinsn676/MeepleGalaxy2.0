@@ -13,12 +13,12 @@ function headerTemplate(){return `
 </div>
   `;}
 
-function cardSection(functionLog,headline){
+function cardSection(functionLog){
   return `
     <div id="topLine">
       <div class="flex-cloumn"> 
-          <h2>${headline}</h2>
-          <div id="showingInfo"></div>
+          <h2>${functionLog[1]}</h2>
+          
       </div>
       <div id="sortButtonsID" class="sort-buttons">
 
@@ -29,14 +29,17 @@ function cardSection(functionLog,headline){
     </section>
 
     <div id="bottomLine">
+        <div id="showingInfo">
+        </div>
         <div id="loadMoreContainer" class="full-width align-column flex-column">
         </div>  
+        
     </div>
   `
 }
 /* ==== Products ==== */
 function productMainClasses(){return `
-  card product-card flex-row`;}
+  card small-card product-card flex-row`;}
 function productTemplate(element){return `
     <div class="contain-image" style="background-image: url('${element.images[0].src}')"></div>
     <div class="flex-column info-text">
@@ -48,8 +51,8 @@ function productTemplate(element){return `
   `;}
 
 function quickViewTemplate (element){return `
-    <div class="card big-card">
-        <div class="contain-image grid1" style="background-image: url('${element.images[0].src}')">
+    <div class=" big-card">
+        <div class="contain-image image grid1" style="background-image: url('${element.images[0].src}')">
         </div>
         <div class="grid2">
           <h6>${element.name}</h6>
@@ -79,7 +82,7 @@ function productPageTemplate(element){return `
 
 /* ==== Blogs ==== */
 function blogMainClasses(){return`
-  card blog-card flex-column`;}
+  card small-card blog-card flex-column`;}
 function blogTemplate(element){return `
     <div>
       <h6>${cleanTime(element.date)}</h6>
@@ -89,7 +92,8 @@ function blogTemplate(element){return `
     </div>
   `;}
 
-function wideBlogMainClasses(){return`card wide-blog-card flex-column`;}
+function wideBlogMainClasses(){return`
+  card wide-blog-card flex-column`;}
 function wideBlogTemplate(element){return`
     <div class="flex-row">
       <h6>${element.title.rendered}</h6><h6>(${cleanTime(element.date)})</h6>

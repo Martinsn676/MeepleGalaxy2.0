@@ -69,8 +69,35 @@ async function getApi(url, endUrlInfo, maxRetries = 1) {
     controller.abort();
   });
 }
+async function postApi(){
+  const apiUrl = 'https://prototype.meeplegalaxy.com/wp-json/wp/v2/posts';
 
+const postData = {
+  title: 'Your Post Title',
+  content: 'Your post content goes here.',
+  status: 'publish', // You can set the post status (publish, draft, etc.)
+};
 
+const requestOptions = {
+  method: 'POST',
+  headers: {
+
+  },
+  body: JSON.stringify(postData),
+};
+
+fetch(apiUrl, requestOptions)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Post created successfully:', data);
+    // You can handle the response data here
+  })
+  .catch(error => {
+    console.error('Error creating post:', error);
+    // Handle errors here
+  });
+}
+//postApi()
 function checkSlider(id,maxElements,slideJump) {
   if(!slideJump){slideJump=1;}
   let sliderItems;
@@ -102,6 +129,7 @@ function checkSlider(id,maxElements,slideJump) {
   updateSlider(0, sliderItems)
 }
 function addModalClick(item){ 
+  console.log(item)
   item.forEach(element => {
     element.addEventListener("click", (element)=>{
       displayModal(element)
@@ -118,9 +146,6 @@ function displayModal(element){
     });
   }
 }
-
-
-
 function cleanData(data){
   const div = document.createElement('div');
   div.innerHTML=data;
@@ -131,9 +156,8 @@ function cleanTime(date){
   const formattedDate = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY');
   return formattedDate
 }
-
-
 function handleFocus(element) {
       quickView(element);
       // You can do additional actions or apply styles here
     }
+
