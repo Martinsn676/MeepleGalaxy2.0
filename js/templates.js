@@ -5,7 +5,7 @@ function headerTemplate(){return `
     <a href="index.html">
       <img class="link-logo" src="https://prototype.meeplegalaxy.com/wp-content/uploads/2023/11/logo_wide_b73121fc-20a9-4cbc-b723-f7f21b51c4ee.png">
     </a>
-    <button id="showMneu">show</button>
+    <button id="headerLinkButton">Menu</button>
   </div>
   <div class="headerLinks pc flex-row">
     <a class="homeLink" href="index.html">Home</a>

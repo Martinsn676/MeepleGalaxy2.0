@@ -1,16 +1,20 @@
 document.querySelector("header").innerHTML=`${headerTemplate()}`
 
 if(document.title==="Shop"){
-    document.querySelector(".shopLink").classList.add("active")
+    document.querySelector(".pc .shopLink").classList.add("active")
+    document.querySelector(".mobile .shopLink").classList.add("active")
 }
 if(document.title==="Meeple Galaxy"){
-    document.querySelector(".homeLink").classList.add("active")
+    document.querySelector(".pc .homeLink").classList.add("active")
+    document.querySelector(".mobile .homeLink").classList.add("active")
 }
 if(document.title==="Blogs"){
-    document.querySelector(".blogLink").classList.add("active")
+    document.querySelector(".pc .blogLink").classList.add("active")
+    document.querySelector(".mobile .blogLink").classList.add("active")
 }
 if(document.title==="Contact us"){
-    document.querySelector(".contactLink").classList.add("active")
+    document.querySelector(".pc .contactLink").classList.add("active")
+    document.querySelector(".mobile .contactLink").classList.add("active")
 }
 
 const modal = document.querySelector("#modal-container")
@@ -34,4 +38,10 @@ searchContainer = document.querySelector("#search-container")
 
 }
 
-document.querySelector("#showMneu").addEventListener("click",()=>document.querySelector("#header .mobile").classList.toggle("hide"))
+document.querySelector("#headerLinkButton").addEventListener("click",()=>{
+
+    document.querySelector("#header .mobile").classList.toggle("hide")
+    document.querySelector(".headerLinks.mobile").scrollIntoView({
+          
+          });
+    });

@@ -65,7 +65,7 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
         apiUrl = blogsUrl;
     }
     mainContainer.querySelector("#sortButtonsID").innerHTML+=`
-        ${addSortButton(functionLog,[['titleAsc','Title Az'],['titleDesc','Title Za'],['dateDesc','Newest'],['dateDesc','Oldest']])}
+        ${addSortButton(functionLog,[['titleAsc','Title Az'],['titleDesc','Title Za'],['dateDesc','Newest'],['dateAsc','Oldest']])}
     `;
 
     // handling sorting
@@ -137,10 +137,9 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
 
         if(searching && searching[0]==="searching"){
             inSearch = true
-            console.log("a")
             searchResultContainer = document.querySelector("#search-container")
             searchResultContainer.innerHTML=""
-                        searchResultContainer = document.querySelector("#search-container")
+            searchResultContainer = document.querySelector("#search-container")
 
         }
         if(!skipNumber){skipNumber=0;}
@@ -160,20 +159,20 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
             if(inSearch){
                 if(searching[1]===""){
                     break;
-                }else{
-                    if(products){
+                }
+                if(products){
                         elementName = element.name
                     }else{
                         elementName = element.title.rendered
                     }
-                }
-                if(elementName.toLowerCase().includes(searching[1].trim().toLowerCase())){
-                }else{
+                
+                if(searchSkipCheck(element,elementName,searching[1])){
                     addNumber++
                     continue;
                 }
-            }
 
+            }
+            
             
             const card = document.createElement('div');
             if(products){
@@ -326,3 +325,10 @@ function quickView(element) {
     }
 
 }
+function searchSkipCheck(elementName,search){
+                if(elementName.toLowerCase().includes(search.trim().toLowerCase())){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
