@@ -318,10 +318,10 @@ function addAttributes(type,element){
 function quickView(element) {
     const quickViewContainer = document.querySelector(".quickView-container")
     if(quickViewContainer){
-        document.querySelector(".headerLinks.mobile").scrollIntoView({
-          
-          });
+        
         quickViewContainer.innerHTML = `${quickViewTemplate(element)}`;
+        quickViewContainer.scrollIntoView({
+          });
         addModalClick(document.querySelectorAll(".big-card .image"))
     }else{
         location.href=`productPage.html?id=${element.id}`;
