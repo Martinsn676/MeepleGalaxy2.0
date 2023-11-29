@@ -37,11 +37,13 @@ button:disabled {
     margin:2px;
 }
 #topLine h2{
-    margin: 0;
+    margin: 0 10px;
+    
 }
 .pc .sort-buttons{
     position: absolute;
     top:0px;
+    right: 10px;
     z-index: 2;
 }
 #bottomLine{
@@ -110,6 +112,7 @@ button:disabled {
     background-color: var(--cardBGColor);
 }
 .card h6{
+    
     padding:5px;
     margin-top:0;
     margin-bottom:5px;

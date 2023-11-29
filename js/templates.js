@@ -1,15 +1,25 @@
 /* ==== Header ==== */
 function headerTemplate(){return `
 <div id="header" class="links-passive flex-row align-row lazy-margin">    
+  <div class="flex-row">
     <a href="index.html">
       <img class="link-logo" src="https://prototype.meeplegalaxy.com/wp-content/uploads/2023/11/logo_wide_b73121fc-20a9-4cbc-b723-f7f21b51c4ee.png">
     </a>
-    <div class="headerLinks">
-      <a id="homeLink" href="index.html">Home</a>
-      <a id="shopLink" href="shop.html">Shop</a>
-      <a id="blogLink" href="blogs.html">Blogs</a>
-      <a id="contactLink" href="contactUs.html">Contact</a>
-    </div>
+    <button id="showMneu">show</button>
+  </div>
+  <div class="headerLinks pc flex-row">
+    <a class="homeLink" href="index.html">Home</a>
+    <a class="shopLink" href="shop.html">Shop</a>
+    <a class="blogLink" href="blogs.html">Blogs</a>
+    <a class="contactLink" href="contactUs.html">Contact</a>
+  </div>
+  <div class="headerLinks mobile hide flex-column">
+    <a class="homeLink" href="index.html">Home</a>
+    <a class="shopLink" href="shop.html">Shop</a>
+    <a class="blogLink" href="blogs.html">Blogs</a>
+    <a class="contactLink" href="contactUs.html">Contact</a>
+  </div>
+    
 </div>
   `;}
 
@@ -18,10 +28,8 @@ function cardSection(functionLog){
     <div id="topLine">
       <div class="flex-cloumn"> 
           <h2>${functionLog[1]}</h2>
-          
       </div>
       <div id="sortButtonsID" class="sort-buttons">
-
       </div>
     </div>
 
@@ -33,7 +41,6 @@ function cardSection(functionLog){
         </div>
         <div id="loadMoreContainer" class="full-width align-column flex-column">
         </div>  
-        
     </div>
   `
 }

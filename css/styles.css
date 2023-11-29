@@ -19,10 +19,35 @@ body{
     background-position: center;
 }
 
+h1, h2, h6{
+  color: rgb(70,70,70);
+}
+.card h1,.card h2,.card h6{
+  color: white;
+}
+
+/* ===== Search ===== */
+#search{
+  display: flex;
+  min-height: 30px;
+  background-color: rgb(100,100,100);
+}
+#search-container{
+  margin: 0 10px;
+}
+#search-input{
+  width: 200px;
+  height: 30px;
+  margin: 5px;
+  
+}
 /* ===== Header ===== */
 header a{
     text-decoration:none;
     color: var(--mainTextColor);
+}
+header .mobile a{
+  color: white;
 }
 .link-logo{
   height: 50px;
@@ -30,12 +55,26 @@ header a{
 header a.active{
   text-decoration:underline;
 }
-@media only screen and (max-width:900px){ 
-  #header{
-    flex-direction: column;
+@media only screen and (min-width:900px){ 
+
+  #header .mobile.hide{
+    display: none;
   }
 }
-
+@media only screen and (max-width:899px){ 
+    #header{
+    flex-direction: column;
+  }
+  #header .pc, #header .mobile.hide{
+    display: none;
+  }
+}
+.headerLinks.mobile{
+  color: white;
+  width: 100%;
+  background-color: var(--cardBGColor);
+  font-size: 40px;
+}
 /* ===== Modal ===== */
 #modal-background{
   position: fixed;

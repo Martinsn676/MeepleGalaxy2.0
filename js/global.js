@@ -10,6 +10,7 @@ let titleDesc = 'orderby=title&order=desc';
 let dateAsc = 'orderby=date&order=asc';
 let dateDesc = 'orderby=date&order=desc';
 let standardSort = `titleAsc`;
+let showNumber = 0;
 
 
 async function getApi(url, endUrlInfo, maxRetries = 1) {
@@ -69,6 +70,7 @@ async function getApi(url, endUrlInfo, maxRetries = 1) {
     controller.abort();
   });
 }
+// chat gpt attempt at post (disabled)
 async function postApi(){
   const apiUrl = 'https://prototype.meeplegalaxy.com/wp-json/wp/v2/posts';
 
@@ -99,37 +101,38 @@ fetch(apiUrl, requestOptions)
 }
 //postApi()
 function checkSlider(id,maxElements,slideJump) {
+
   if(!slideJump){slideJump=1;}
   let sliderItems;
-  let showNumber = 0;
-  function updateSlider(adjust, items) {
-    let count = 0;
-    let maxShow = window.innerWidth/150;
-
-    showNumber += adjust;      
-    if(showNumber<0){
-      showNumber +=items.length-maxElements-1;
-    }
-    if(showNumber>items.length-maxElements){
-      showNumber-=items.length-maxElements
-    }
-    if(maxShow>maxElements){
-      for (let i = 0; i < items.length; i++) {
-        items[i].classList.add("hidden-slider");
-        if(i > showNumber-1 && count<maxShow && count < maxElements){
-            items[i].classList.remove("hidden-slider");
-            count++
-        }
-      }   
-    }
-  }
+  
+  
   sliderItems = document.querySelectorAll(`#${id} .card`);
-  document.querySelector(`#${id} .left-slider`).addEventListener("click", () => updateSlider(-slideJump, sliderItems));
-  document.querySelector(`#${id} .right-slider`).addEventListener("click", () => updateSlider(slideJump, sliderItems));
-  updateSlider(0, sliderItems)
+  document.querySelector(`#${id} .left-slider`).addEventListener("click", () => updateSlider(-slideJump, sliderItems,maxElements));
+  document.querySelector(`#${id} .right-slider`).addEventListener("click", () => updateSlider(slideJump, sliderItems,maxElements));
+  updateSlider(0, sliderItems,maxElements)
+}
+function updateSlider(adjust, items,maxElements) {
+  const realQuantiy = items.length-maxElements-1;
+  let count = 0;
+  let maxShow = window.innerWidth/150;
+  showNumber += adjust;
+  if(showNumber<0){
+    showNumber += realQuantiy
+  }
+  if(showNumber>=realQuantiy){
+    showNumber-=realQuantiy;
+  }
+  if(maxShow>maxElements){
+    for (let i = 0; i < items.length; i++) {
+      items[i].classList.add("hidden-slider");
+      if(i > showNumber-1 && count<maxShow && count < maxElements){
+          items[i].classList.remove("hidden-slider");
+          count++
+      }
+    }   
+  }
 }
 function addModalClick(item){ 
-  console.log(item)
   item.forEach(element => {
     element.addEventListener("click", (element)=>{
       displayModal(element)

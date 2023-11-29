@@ -1,8 +1,8 @@
 //console.log("product.js")
-
+ 
 async function addElements(place,headline,itemType,displayQuantity,type,order) {
-    let loadMore = false;
-    let slider = false;
+    
+   
     let loadExtra = 0;
     let apiUrl
     let urlOrder
@@ -11,6 +11,17 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     let secondLoadNumber
     let maxElements = 999
     let allElements
+    let products = false;
+    let blogs = false;
+    let wideBlogs = false;
+    let slider = false;
+    let loadMore = false;
+
+    if(itemType==="products"){products=true;}
+    if(itemType==="blogs"){blogs=true;}
+    if(itemType==="wide-blogs"){wideBlogs=true;}
+    if(type[0]==="slider"){slider=true;}
+    if(type[0]==="loadMore"){loadMore=true;}
 
     //missing info and errorhandling
     if(!type){type=["",999,999]}
@@ -22,8 +33,10 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     const container = mainContainer.querySelector("#elements-container")
     
     // alpha, mobile version instead
-    if(window.innerWidth<900 && type[0]==="slider"){
+    if(slider && window.innerWidth<900){
         type = ["loadMore",12]
+        slider = false;
+        loadMore = true;
         displayQuantity = 6
         console.log("mobile version")
         window.addEventListener("resize", ()=> {
@@ -38,16 +51,16 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     }
 
     // handling template absed on product type
-    if(itemType==="products"){
+    if(products){
         mainTemplate = productMainClasses();
         apiUrl = productsUrl;
         
     }
-    if(itemType==="blogs"){
+    if(blogs){
         mainTemplate = blogMainClasses();
         apiUrl = blogsUrl;
     }
-    if(itemType==="wide-blogs"){
+    if(wideBlogs){
         mainTemplate = wideBlogMainClasses();
         apiUrl = blogsUrl;
     }
@@ -83,7 +96,7 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
         secondLoadNumber = type[1];
         loadMore=true;
     }
-    if(type[0]==="slider" && window.innerWidth> document.body.clientWidth + 50){
+    if(slider && window.innerWidth> document.body.clientWidth + 50){
         container.classList.add("slider")
         loadExtra = document.body.clientWidth/150
         slider=true;
@@ -121,17 +134,20 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
     async function renderElements(elements,quantity,itemType,skipNumber,searching){
         let inSearch = false;
         let elementName
-        console.log(elements,quantity,itemType,skipNumber,searching)
-       //if(renderContainer==="" && !search){break;}
+
         if(searching && searching[0]==="searching"){
-            
             inSearch = true
+            console.log("a")
+            searchResultContainer = document.querySelector("#search-container")
+            searchResultContainer.innerHTML=""
+                        searchResultContainer = document.querySelector("#search-container")
+
         }
         if(!skipNumber){skipNumber=0;}
         addNumber=skipNumber
 
         
-        for (let i = skipNumber; i < quantity + skipNumber  ; i++) {
+        for (let i = skipNumber; i < quantity   ; i++) {
        
 
             if(slider && addNumber===elements.length){
@@ -145,13 +161,13 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
                 if(searching[1]===""){
                     break;
                 }else{
-                    if(itemType==="products"){
+                    if(products){
                         elementName = element.name
                     }else{
                         elementName = element.title.rendered
                     }
                 }
-                if(elementName.toLowerCase().startsWith(searching[1].trim().toLowerCase())){
+                if(elementName.toLowerCase().includes(searching[1].trim().toLowerCase())){
                 }else{
                     addNumber++
                     continue;
@@ -160,15 +176,15 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
 
             
             const card = document.createElement('div');
-            if(itemType==="products"){
+            if(products){
                 card.className = productMainClasses();
                 card.innerHTML = productTemplate(element)
             }
-            if(itemType==="blogs"){
+            if(blogs){
                 card.className = blogMainClasses();
                 card.innerHTML = blogTemplate(element)
             }
-            if(itemType==="wide-blogs"){
+            if(wideBlogs){
                 card.className = wideBlogMainClasses();
                 card.innerHTML = wideBlogTemplate(element);
                 
@@ -190,7 +206,8 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
             
                 
             if(inSearch){
-                document.querySelector("#search-container").appendChild(card);
+                console.log("b")
+                searchResultContainer.appendChild(card);
             }else{
                 container.appendChild(card);
             }
@@ -212,7 +229,7 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
         
         if(slider){
             allElements = await getApi(apiUrl,[perPage+apiLoadQuantity,urlOrder]);
-            renderElements(allElements,(allElements.length+loadExtra),itemType,displayQuantity)
+            renderElements(allElements,(allElements.length+loadExtra),itemType,addNumber)
             checkSlider(mainContainer.id,maxElements,type[2])
         }
         if(loadMore){  
@@ -222,7 +239,6 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
                 const skipNumber = addNumber
                 loadMoreContainer.innerHTML=""
                 loadMoreContainer.innerHTML=`<button id="loadMoreButton" >load more</button> `
-                console.log(allElements,displayQuantity,itemType,addNumber)
                 mainContainer.querySelector("#loadMoreButton").addEventListener("click",()=>renderElements(allElements,allElements.length,itemType,skipNumber))
             }
         }
@@ -231,19 +247,16 @@ async function addElements(place,headline,itemType,displayQuantity,type,order) {
         allButons.forEach(element => {
             element.disabled=false;
         });
-        const searchField = document.querySelector('#search-input')
-
-        function updateSearch(){
-                console.log("sadfsadsad")
-                searchContainer = document.querySelector("#search-container")
-                searchContainer.innerHTML =""
-                searchInput = document.querySelector("#search-input")
-                renderElements(allElements,allElements.length,itemType,0,['searching',searchInput.value])
-            }     
+         
         if(searchField){
+            function updateSearch(allElements,search){
+                
+                renderElements(allElements,allElements.length,itemType,0,['searching',search])
+            }  
             document.querySelector("#search-input").addEventListener('keyup', function (){
                 const scrollPosition = window.scrollY;
-                updateSearch()
+                
+                updateSearch(allElements,this.value)
                 window.scrollTo(0, scrollPosition);
             });
         }
