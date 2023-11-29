@@ -274,11 +274,11 @@ function goToPage(itemType,element){
 function resizeCheck(changeFrom,width){
     if(changeFrom==="mobile" && width>900){
         console.log("change to pc")
-        location.reload();
+       // location.reload();
     }
     if(changeFrom==="pc" && width<900){
         console.log("change to mobile")
-        location.reload();
+        //location.reload();
     }
 }
 function addAttributes(type,element){
@@ -314,7 +314,6 @@ function addAttributes(type,element){
     });
     return newHtml;
 }
-
 function quickView(element) {
     const quickViewContainer = document.querySelector(".quickView-container")
     if(quickViewContainer){
@@ -329,9 +328,9 @@ function quickView(element) {
 
 }
 function searchSkipCheck(elementName,search){
-                if(elementName.toLowerCase().includes(search.trim().toLowerCase())){
-                    return false;
-                }else{
-                    return true;
-                }
-            }
+    if(elementName.toLowerCase().includes(search.trim().toLowerCase())){
+        return false;
+    }else{
+        return true;
+    }
+}
